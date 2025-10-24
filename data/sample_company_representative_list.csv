@@ -1,1 +1,6 @@
-CompanyRepID,Name,CompanyName,Department,Position,Email,Status
+CompanyRepID,Name,CompanyName,Department,Position,Email
+grace.tan@acmerobo.com,Grace Tan,Acme Robotics Pte Ltd,Engineering,Lead Engineer,grace.tan@acmerobo.com
+harish.kumar@bluewave.ai,Harish Kumar,BlueWave Analytics,Solutions,Consultant,harish.kumar@bluewave.ai
+chloe.lim@sgfintechlabs.com,Chloe Lim,Singapore FinTech Labs,Business Development,Account Manager,chloe.lim@sgfintechlabs.com
+daniel.wong@greenscape.tech,Daniel Wong,Greenscape Urban Tech,Product,Product Owner,daniel.wong@greenscape.tech
+aisyah@orbitalsea.com,Nur Aisyah,Orbital Systems SEA,Human Resources,HR Partner,aisyah@orbitalsea.com
