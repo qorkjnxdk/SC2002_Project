@@ -1,13 +1,13 @@
 package boundaries;
 import java.util.Scanner;
+
+import controllers.StudentController;
 import util.AppContext;
 
-import repositories.UserRepository;
-
 public class StudentView{
-    private UserRepository users;
-    public StudentView(UserRepository users){
-        this.users = users;
+    private StudentController studentController;
+    public StudentView(StudentController studentController){
+        this.studentController = studentController;
     };
     public void run(AppContext Context, Scanner sc){
         System.out.println("Student View Here");

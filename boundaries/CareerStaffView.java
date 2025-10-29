@@ -2,19 +2,15 @@ package boundaries;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import entities.CompanyRep;
+import controllers.CareerStaffController;
 import entities.CompanyRepCreationReq;
-import repositories.RequestRepository;
-import repositories.UserRepository;
 import util.AppContext;
-import util.UserFactory;
+
 
 public class CareerStaffView {
-    private UserRepository users;
-    private RequestRepository requests;
-    public CareerStaffView(UserRepository users, RequestRepository requests){
-        this.users = users;
-        this.requests = requests;
+    private CareerStaffController careerStaffController;
+    public CareerStaffView(CareerStaffController careerStaffController){
+        this.careerStaffController = careerStaffController;
     };
     public void run(AppContext Context, Scanner sc){
         while (true) {
@@ -32,7 +28,7 @@ public class CareerStaffView {
                     System.out.println("Feature not implemented yet.");
                     break;
                 case 2:
-                    viewPendingAccountCreationReqs(users, requests, sc);
+                    viewPendingAccountCreationReqs(sc, careerStaffController);
                     break;
                 case 3:
                     System.out.println("Feature not implemented yet.");
@@ -47,15 +43,15 @@ public class CareerStaffView {
             }
         }
     }
-    public static void viewPendingAccountCreationReqs(UserRepository users, RequestRepository requests, Scanner sc){
+    public void viewPendingAccountCreationReqs(Scanner sc, CareerStaffController careerStaffController){
         System.out.println("\nAll Pending Account Creation Requests:");
-        ArrayList<CompanyRepCreationReq> companyRepCreationReqList = requests.getAllCompanyRepCreationReq();
+        ArrayList<CompanyRepCreationReq> companyRepCreationReqList = careerStaffController.getPendingAccountCreationReqs();
         for (int i = 0; i < companyRepCreationReqList.size(); i++) {
-            CompanyRepCreationReq companyRepCreationReq = companyRepCreationReqList.get(i);
-            System.out.println((i + 1) + ". " + companyRepCreationReq.getName() + ", "
-                + companyRepCreationReq.getCompanyName() + ", "
-                + companyRepCreationReq.getDepartment() + ", "
-                + companyRepCreationReq.getUserID());
+            CompanyRepCreationReq req = companyRepCreationReqList.get(i);
+            System.out.println((i + 1) + ". " + req.getName() + ", "
+                + req.getCompanyName() + ", "
+                + req.getDepartment() + ", "
+                + req.getUserID());
         }
         System.out.println("\nWould you like to approve any? (Y/N)");
         String choice2 = sc.next();
@@ -71,10 +67,7 @@ public class CareerStaffView {
                     continue; 
                 }
                 CompanyRepCreationReq selected = companyRepCreationReqList.get(choice3 - 1);
-                requests.getAllCompanyRepCreationReq().remove(choice3 - 1);
-                UserFactory userFactory = new UserFactory();
-                CompanyRep companyRep = userFactory.addCompanyRep(selected);
-                users.addCompanyRep(companyRep);
+                careerStaffController.addCompanyRepAcct(selected);
                 System.out.println("Approved account for: " + selected.getName() + " (" + selected.getUserID() + ")");
                 break;
             }

@@ -11,4 +11,7 @@ public class RequestRepository {
     public void addCompanyReqCreationReq(CompanyRepCreationReq companyRepCreationReq){
         companyRepCreationReqList.add(companyRepCreationReq);
     }
+    public void deleteCompanyReqCreationReq(CompanyRepCreationReq companyRepCreationReq){
+        companyRepCreationReqList.remove(companyRepCreationReq);
+    }
 }

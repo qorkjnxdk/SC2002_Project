@@ -48,10 +48,4 @@ public class AuthController {
         System.out.println("Login successful!");
         return new Session(userID, role);
     }
-    public void logout(){
-
-    }
-    public void changePassword(){
-
-    }
 }
