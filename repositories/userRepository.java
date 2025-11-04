@@ -10,15 +10,13 @@ public class UserRepository {
     private ArrayList<CompanyRep> companyRepList = new ArrayList<>();
     private ArrayList<CareerStaff> careerStaffList = new ArrayList<>();
     public UserRepository(){}
-    public void viewAllStudents(){
-        for(Student student: studentList){
-            System.out.println(student.getMajors());
-        }
+    public ArrayList<Student> getStudentList(){
+        return studentList;
     }
     public void addStudent(Student student){
         studentList.add(student);
     }
-    public User findStudentByUserID(String userID){
+    public Student findStudentByUserID(String userID){
         for(Student student : studentList){
             if(student.getUserId().equals(userID)){
                 return student;
@@ -26,10 +24,8 @@ public class UserRepository {
         }
         return null;
     }
-    public void viewAllCareerStaffList(){
-        for(CareerStaff careerStaff: careerStaffList){
-            System.out.println(careerStaff.getStaffDepartment());
-        }
+    public ArrayList<CareerStaff> getCareerStaffList(){
+        return careerStaffList;
     }
     public void addCareerStaff(CareerStaff careerStaff){
         careerStaffList.add(careerStaff);
@@ -42,10 +38,8 @@ public class UserRepository {
         }
         return null;
     }
-    public void viewAllCompanyRepList(){
-        for(CompanyRep companyRep: companyRepList){
-            System.out.println(companyRep.getCompanyName());
-        }
+    public ArrayList<CompanyRep> getCompanyRepList(){
+        return companyRepList;
     }
     public void addCompanyRep(CompanyRep companyRep){
         companyRepList.add(companyRep);
@@ -58,4 +52,5 @@ public class UserRepository {
         }
         return null;
     }
+
 }

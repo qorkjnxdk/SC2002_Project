@@ -4,8 +4,8 @@ public class CompanyRep extends User{
     private String companyName;
     private String department;
     private String position;
-    public CompanyRep(String userID, String name, String companyName, String department, String position){
-        super(userID, name);
+    public CompanyRep(String userID, String name, String companyName, String department, String position, String password){
+        super(userID, name, password);
         this.role = Role.COMPANY_REP;
         this.companyName = companyName;
         this.department = department;

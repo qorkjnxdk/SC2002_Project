@@ -46,6 +46,6 @@ public class AuthController {
             throw new WrongPasswordException("Incorrent password entered");
         }
         System.out.println("Login successful!");
-        return new Session(userID, role);
+        return new Session(userID, user, role);
     }
 }

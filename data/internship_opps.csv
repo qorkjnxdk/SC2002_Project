@@ -1,0 +1,3 @@
+Title,Description,Level,PreferredMajor,OpeningDate,ClosingDate,CompanyName,Department,CompanyRepInCharge,Slots,Status,ApplicationList
+SWE Intern,Intern things,BASIC,CCDS,2025-10-2,2025-10-25,Acme Robotics Pte Ltd,SWE,grace.tan@acmerobo.com,10,PENDING,U2310001A:appliedDateTime:SUCCESSFUL|U2310002B:appliedDateTime:SUCCESSFUL
+SRE Intern,SRE things,INTERMEDIATE,CCDS,2025-10-10,2025-10-10,Acme Robotics Pte Ltd,SRE,grace.tan@acmerobo.com,10,PENDING,U2310004D:appliedDateTime:SUCCESSFUL|U2310005E:appliedDateTime:PENDING

@@ -35,6 +35,7 @@ public class CareerStaffView {
                     break;
                 case 4:
                     Context.clearSession();
+                    careerStaffController.saveFiles();
                     System.out.println("You have been logged out.");
                     return;
                 default:

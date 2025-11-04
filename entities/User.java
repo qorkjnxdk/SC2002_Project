@@ -6,10 +6,10 @@ public abstract class User {
     private String userID;
     private String name;
     private String password;
-    public User(String userID, String name){
+    public User(String userID, String name, String password){
         this.userID = userID;
         this.name = name;
-        this.password = "password";
+        this.password = password;
     }
     public void logIn(String password){
         
