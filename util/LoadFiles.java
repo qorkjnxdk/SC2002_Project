@@ -111,7 +111,7 @@ public class LoadFiles {
 
         String[] tokens = data.split("\\|");
         for (String token : tokens) {
-            String[] parts = token.split(":");
+            String[] parts = token.split(";");
             if (parts.length < 3) continue;
             String studentId = parts[0];
             String appliedDate = parts[1];

@@ -157,8 +157,8 @@ public class CompanyRepView {
             }  
             if(acceptedApplicants.size()!=0){
                 System.out.printf("\nThese are the %d applicants that have accepted the offer: \n", acceptedApplicants.size());
-                for (int j = 0; j < successfulApplicants.size(); j++) {
-                    Application application = successfulApplicants.get(j);
+                for (int j = 0; j < acceptedApplicants.size(); j++) {
+                    Application application = acceptedApplicants.get(j);
                     System.out.println((j + 1) + ". Student ID: " + application.getStudentID());
                 }   
             }

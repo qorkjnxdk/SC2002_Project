@@ -99,6 +99,7 @@ public class CareerStaffView {
                     continue; 
                 }
                 InternshipWithdrawalReq selected = reqs.get(choice3 - 1);
+                careerStaffController.approveWithrawReq(selected);
                 System.out.println("Approved withdrawal request for: " + selected.getInternshipTitle() + " (" + selected.getUserID() + ")");
                 break;
             }

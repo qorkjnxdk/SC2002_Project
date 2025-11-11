@@ -73,6 +73,10 @@ public class InternshipOpportunity{
     public void setStatus(Status status) {
         this.status = status;
     }
+    public void setSlots(int noOfSlots){
+        this.noOfSlots=noOfSlots;
+    }
+    
     public void addApplication(Application application){
         applicationList.add(application);
     }

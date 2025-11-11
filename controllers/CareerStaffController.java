@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import entities.CompanyRep;
 import entities.CompanyRepCreationReq;
 import entities.InternshipWithdrawalReq;
+import entities.InternshipOpportunity;
+import entities.Application;
 import entities.User.Role;
 import repositories.OpportunityRepository;
 import repositories.RequestRepository;
@@ -35,6 +37,19 @@ public class CareerStaffController {
         User user = userFactory.addUser(data, Role.COMPANY_REP);
         CompanyRep companyRep = (CompanyRep)user;
         users.addCompanyRep(companyRep);
+    }
+    public void approveWithrawReq(InternshipWithdrawalReq req){
+        ArrayList<InternshipOpportunity> opps = opportunities.getInternshipOpportunityList();
+        for (InternshipOpportunity opp : opps) {
+            if (opp.getInternshipTitle().equals(req.getInternshipTitle())
+                && opp.getCompanyName().equals(req.getCompanyName())){
+                //logic for withdrawn
+                break;
+            }
+        }
+
+        // remove the withdrawal request from repository
+        requests.deleteInternshipWithdrawalReq(req);
     }
     public void saveFiles(){
         SaveFiles saveFiles = new SaveFiles();

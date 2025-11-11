@@ -48,13 +48,13 @@ public class LoginView {
             if (session == null) continue;
 
             switch (session.getRole()) {
-                case Role.STUDENT:
+                case STUDENT:
                     studentView.run(Context, sc);
                     break;
-                case Role.CAREER_STAFF:
+                case CAREER_STAFF:
                     careerStaffView.run(Context, sc);
                     break;
-                case Role.COMPANY_REP:
+                case COMPANY_REP:
                     companyRepView.run(Context, sc);
                     break;
             }

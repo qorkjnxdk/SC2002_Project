@@ -120,7 +120,7 @@ public class SaveFiles {
         return apps.stream()
             .map(a -> {
                 String status = a.getApplicationStatus() == null ? "" : a.getApplicationStatus().name();
-                return a.getStudentID() + ":" + a.getAppliedDateTime() + ":" + status;
+                return a.getStudentID() + ";" + a.getAppliedDateTime() + ";" + status;
             })
             .reduce((a, b) -> a + "|" + b)
             .orElse("");
