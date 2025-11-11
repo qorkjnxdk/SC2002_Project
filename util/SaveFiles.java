@@ -39,7 +39,7 @@ public class SaveFiles {
         try (PrintWriter pw = new PrintWriter(Files.newBufferedWriter(filePath, StandardCharsets.UTF_8))) {
             pw.println("CompanyRepID,Name,CompanyName,Department,Position,Password");
             for (CompanyRep s : companyRepList) {
-                pw.printf("%s,%s,%s,%s,%s%n",
+                pw.printf("%s,%s,%s,%s,%s,%s%n",
                 s.getUserId(),
                 s.getName(),
                 s.getCompanyName(),
@@ -64,6 +64,23 @@ public class SaveFiles {
                 s.getCompanyName(),
                 s.getDepartment(),
                 s.getPosition());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void saveInternshipWithdrawalRequests(RequestRepository requestRepository){
+        ArrayList<InternshipWithdrawalReq> internshipWithdrawalReqs = requestRepository.getInternshipWithdrawalReqList();
+        String path = "data/withdrawal_req_list.csv";
+        Path filePath = Paths.get(path);
+        try (PrintWriter pw = new PrintWriter(Files.newBufferedWriter(filePath, StandardCharsets.UTF_8))) {
+            pw.println("StudentID,InternshipTitle,CompanyName,WithdrawalReason");
+            for (InternshipWithdrawalReq s : internshipWithdrawalReqs) {
+                pw.printf("%s,%s,%s,%s",
+                s.getUserID(),
+                s.getInternshipTitle(),
+                s.getCompanyName(),
+                s.getWithdrawalReason());
             }
         } catch (IOException e) {
             e.printStackTrace();

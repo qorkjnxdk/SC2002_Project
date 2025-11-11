@@ -15,14 +15,11 @@ public class App{
         OpportunityRepository opportunityRepository = new OpportunityRepository();
 
         LoadFiles ld = new LoadFiles();
-        ld.loadStudentCSV(userRepository);
-        ld.loadCareerStaffCSV(userRepository);
-        ld.loadCompanyRepCSV(userRepository);
-        ld.loadCompanyRepReqCSV(requestRepository);
-        ld.loadOpportunityCSV(opportunityRepository);
+
+        ld.loadCSVs(userRepository,requestRepository,opportunityRepository);
 
         CompanyRepController companyRepController = new CompanyRepController(requestRepository, userRepository, opportunityRepository);
-        StudentController studentController = new StudentController(userRepository, opportunityRepository);
+        StudentController studentController = new StudentController(requestRepository, userRepository, opportunityRepository);
         CareerStaffController careerStaffController = new CareerStaffController(requestRepository, userRepository, opportunityRepository);
         AuthController authController = new AuthController(userRepository);
         Scanner sc = new Scanner(System.in);

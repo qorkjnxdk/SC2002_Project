@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import entities.CompanyRep;
 import entities.CompanyRepCreationReq;
+import entities.InternshipWithdrawalReq;
 import entities.User.Role;
 import repositories.OpportunityRepository;
 import repositories.RequestRepository;
@@ -24,6 +25,9 @@ public class CareerStaffController {
     public ArrayList<CompanyRepCreationReq> getPendingAccountCreationReqs(){
         return requests.getAllCompanyRepCreationReq();
     }
+    public ArrayList<InternshipWithdrawalReq> getInternshipWithdrawalReqs(){
+        return requests.getInternshipWithdrawalReqList();
+    }
     public void addCompanyRepAcct(CompanyRepCreationReq req){
         requests.deleteCompanyReqCreationReq(req);
         UserFactory userFactory = new UserFactory();
@@ -36,5 +40,6 @@ public class CareerStaffController {
         SaveFiles saveFiles = new SaveFiles();
         saveFiles.saveCompanyRepCSV(users);
         saveFiles.saveCompanyRepReqCSV(requests);
+        saveFiles.saveInternshipWithdrawalRequests(requests);
     }
 }

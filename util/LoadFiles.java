@@ -12,6 +12,7 @@ import entities.CareerStaff;
 import entities.CompanyRep;
 import entities.CompanyRepCreationReq;
 import entities.InternshipOpportunity;
+import entities.InternshipWithdrawalReq;
 import entities.InternshipOpportunity.InternshipLevel;
 import entities.InternshipOpportunity.Major;
 import entities.Student;
@@ -20,6 +21,14 @@ import repositories.OpportunityRepository;
 import repositories.RequestRepository;
 
 public class LoadFiles {
+    public void loadCSVs(UserRepository users, RequestRepository requests, OpportunityRepository opportunities){
+        loadStudentCSV(users);
+        loadCareerStaffCSV(users);
+        loadCompanyRepCSV(users);
+        loadCompanyRepReqCSV(requests);
+        loadWithdrawalRequestCSV(requests);
+        loadOpportunityCSV(opportunities);
+    }
     public void loadStudentCSV(UserRepository userRepository){
         UserFactory userFactory = new UserFactory();
         String pathString = "data/student_list.csv";
@@ -111,5 +120,19 @@ public class LoadFiles {
             apps.add(app);
         }
         return apps;
+    }
+    public void loadWithdrawalRequestCSV(RequestRepository requestRepository){
+        String pathString = "data/withdrawal_req_list.csv";
+        String line;
+        try(BufferedReader br = new BufferedReader(new FileReader(pathString))){
+            line = br.readLine();
+            while ((line = br.readLine())!=null){
+                String[] data = line.split(",");
+                InternshipWithdrawalReq withdrawalReq = new InternshipWithdrawalReq(data[0], data[1], data[2], data[3]);
+                requestRepository.addInternshipWithdrawalReq(withdrawalReq);
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        } 
     }
 }

@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import controllers.CareerStaffController;
 import entities.CompanyRepCreationReq;
+import entities.InternshipWithdrawalReq;
 import util.AppContext;
 
 
@@ -31,7 +32,7 @@ public class CareerStaffView {
                     viewPendingAccountCreationReqs(sc, careerStaffController);
                     break;
                 case 3:
-                    System.out.println("Feature not implemented yet.");
+                    viewWithdrawalReqs(sc, careerStaffController);
                     break;
                 case 4:
                     Context.clearSession();
@@ -54,7 +55,7 @@ public class CareerStaffView {
                 + req.getDepartment() + ", "
                 + req.getUserID());
         }
-        System.out.println("\nWould you like to approve any? (Y/N)");
+        System.out.println("\nWould you like to make a new withdrawal request? (Y/N)");
         String choice2 = sc.next();
         if (choice2.equalsIgnoreCase("Y")){
             while (true) {
@@ -70,6 +71,35 @@ public class CareerStaffView {
                 CompanyRepCreationReq selected = companyRepCreationReqList.get(choice3 - 1);
                 careerStaffController.addCompanyRepAcct(selected);
                 System.out.println("Approved account for: " + selected.getName() + " (" + selected.getUserID() + ")");
+                break;
+            }
+        }
+    }
+    public void viewWithdrawalReqs(Scanner sc, CareerStaffController careerStaffController){
+        System.out.println("\nAll Pending Internship Withdrawal Requests:");
+        ArrayList<InternshipWithdrawalReq> reqs = careerStaffController.getInternshipWithdrawalReqs();
+        for (int i = 0; i < reqs.size(); i++) {
+            InternshipWithdrawalReq req = reqs.get(i);
+            System.out.println((i + 1) + ". " + req.getUserID() + ", "
+                + req.getCompanyName() + ", "
+                + req.getInternshipTitle() + ", \nReason: "
+                + req.getWithdrawalReason());
+        }
+        System.out.println("\nWould you like to approve any? (Y/N)");
+        String choice2 = sc.next();
+        if (choice2.equalsIgnoreCase("Y")){
+            while (true) {
+                System.out.println("\nWhich request do you want to approve? (enter the index number, or -1 to return)");
+                int choice3 = sc.nextInt();
+                if (choice3 == -1) {
+                    return;
+                }
+                if (choice3 < 1 || choice3 > reqs.size()){
+                    System.out.println("Invalid selection. Please enter a valid index or -1 to return.");
+                    continue; 
+                }
+                InternshipWithdrawalReq selected = reqs.get(choice3 - 1);
+                System.out.println("Approved withdrawal request for: " + selected.getInternshipTitle() + " (" + selected.getUserID() + ")");
                 break;
             }
         }

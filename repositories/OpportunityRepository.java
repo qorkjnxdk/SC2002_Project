@@ -1,7 +1,6 @@
 package repositories;
 import java.util.ArrayList;
 
-import entities.Application;
 import entities.InternshipOpportunity;
 import java.util.stream.Collectors;
 

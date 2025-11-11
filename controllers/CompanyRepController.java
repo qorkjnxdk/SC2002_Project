@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import entities.InternshipOpportunity;
 import entities.Student;
-import entities.Application;
 
 public class CompanyRepController {
     private RequestRepository requests;
