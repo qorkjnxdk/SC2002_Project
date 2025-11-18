@@ -15,8 +15,7 @@ public class App{
         OpportunityRepository opportunityRepository = new OpportunityRepository();
 
         LoadFiles ld = new LoadFiles();
-
-        ld.loadCSVs(userRepository,requestRepository,opportunityRepository);
+        ld.loadCSVs(userRepository, requestRepository, opportunityRepository);
 
         CompanyRepController companyRepController = new CompanyRepController(requestRepository, userRepository, opportunityRepository);
         StudentController studentController = new StudentController(requestRepository, userRepository, opportunityRepository);
@@ -29,7 +28,7 @@ public class App{
         StudentView studentView = new StudentView(studentController);
         CompanyRepView companyRepView = new CompanyRepView(companyRepController);
         CareerStaffView careerStaffView = new CareerStaffView(careerStaffController);
-        LoginView loginView = new LoginView(careerStaffView, companyRepView, studentView);
+        LoginView loginView = new LoginView(careerStaffView, companyRepView, studentView,requestRepository);
         loginView.run(Context, sc);
     }
 }

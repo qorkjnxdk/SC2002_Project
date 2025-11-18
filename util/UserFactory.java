@@ -1,7 +1,6 @@
 package util;
 import entities.CareerStaff;
 import entities.CompanyRep;
-import entities.CompanyRepCreationReq;
 import entities.Student;
 import entities.User.Role;
 import entities.User;
@@ -22,10 +21,5 @@ public class UserFactory {
             default:
                 throw new IllegalArgumentException("Unknown role: " + role);        
         } 
-    }
-
-    public CompanyRepCreationReq addCompanyRepCreationReq(String line){
-        String[] data = line.split(",");
-        return new CompanyRepCreationReq(data[0],data[1],data[2],data[3],data[4]);
     }
 }

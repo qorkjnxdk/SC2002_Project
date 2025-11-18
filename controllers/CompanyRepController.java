@@ -3,9 +3,13 @@ import repositories.*;
 import util.SaveFiles;
 
 import java.util.ArrayList;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
+import entities.Filter;
 import entities.InternshipOpportunity;
 import entities.Student;
+import entities.InternshipOpportunity.Status;
 
 public class CompanyRepController {
     private RequestRepository requests;
@@ -19,6 +23,15 @@ public class CompanyRepController {
     public ArrayList<InternshipOpportunity> getRelevantInternshipOpportunities(String userID){
         return opportunities.getRelevantInternshipOpportunities(userID);
     }
+    public ArrayList<InternshipOpportunity> getInternshipByStatus(String userID, Status status){
+        ArrayList<InternshipOpportunity> oppList = opportunities.getRelevantInternshipOpportunities(userID).stream()
+            .filter(opp->opp.getStatus().equals(status))
+            .collect(Collectors.toCollection(ArrayList::new));
+        return oppList;
+    }
+    public ArrayList<InternshipOpportunity> getNoOfApplications(String userID){
+        return opportunities.getRelevantInternshipOpportunities(userID);
+    }
     public ArrayList<InternshipOpportunity> getInternshipOpportunityList(){
         return opportunities.getInternshipOpportunityList();
     }
@@ -28,8 +41,12 @@ public class CompanyRepController {
     public void saveFiles(){
         SaveFiles saveFiles = new SaveFiles();
         saveFiles.saveInternshipOpportunityCSV(opportunities);
+        saveFiles.saveCompanyRepCSV(users);
     }
     public Student findStudentByUserID(String userID){
         return users.findStudentByUserID(userID);
+    }
+    public ArrayList<InternshipOpportunity> filterOpportunities(Filter filter){
+        return opportunities.filterOpportunities(filter);
     }
 }

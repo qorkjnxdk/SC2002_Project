@@ -2,6 +2,7 @@ package util;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import entities.User.Role;
@@ -19,6 +20,7 @@ import entities.Student;
 import repositories.UserRepository;
 import repositories.OpportunityRepository;
 import repositories.RequestRepository;
+import entities.InternshipOpportunity.Status;
 
 public class LoadFiles {
     public void loadCSVs(UserRepository users, RequestRepository requests, OpportunityRepository opportunities){
@@ -81,8 +83,9 @@ public class LoadFiles {
         try(BufferedReader br = new BufferedReader(new FileReader(pathString))){
             line = br.readLine();
             while ((line = br.readLine())!=null){
-                CompanyRepCreationReq companyRepCreationReq = userFactory.addCompanyRepCreationReq(line);
-                requestRepository.addCompanyReqCreationReq(companyRepCreationReq);
+                String[] data = line.split(",");
+                CompanyRepCreationReq req = new CompanyRepCreationReq(data[0],data[1],data[2],data[3],data[4]);
+                requestRepository.addCompanyReqCreationReq(req);
             }
         } catch (IOException e){
             e.printStackTrace();
@@ -94,11 +97,15 @@ public class LoadFiles {
         try(BufferedReader br = new BufferedReader(new FileReader(pathString))){
             line = br.readLine();
             while ((line = br.readLine())!=null){
-                String[] data = line.split(",");
+                String[] data = line.split(",", -1);
                 InternshipLevel level = InternshipLevel.valueOf(data[2]);
                 Major major = Major.valueOf(data[3]);
-                ArrayList<Application> applicationList = deserializeApplications(data[11]);
-                InternshipOpportunity internshipOpp = new InternshipOpportunity(data[0], data[1], level, major, data[4], data[5], data[6], data[7], data[8], Integer.parseInt(data[9]),applicationList);
+                Status status = Status.valueOf(data[10]);
+                ArrayList<Application> applicationList = new ArrayList<>();
+                if(data.length >= 13 && !data[12].isEmpty()){
+                    applicationList = deserializeApplications(data[12]);
+                }
+                InternshipOpportunity internshipOpp = new InternshipOpportunity(data[0], data[1], level, major, data[4], data[5], data[6], data[7], data[8], Integer.parseInt(data[9]),status, Boolean.parseBoolean(data[11]),applicationList);
                 opportunityRepository.addInternshipOpportunity(internshipOpp);
             }
         } catch (IOException e){

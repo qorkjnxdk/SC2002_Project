@@ -17,9 +17,10 @@ public class InternshipOpportunity{
     private String companyRepInCharge;
     private int noOfSlots;
     private Status status;
+    private Boolean visible;
     private ArrayList<Application> applicationList;
 
-    public InternshipOpportunity(String internshipTitle, String description, InternshipLevel internshipLevel, Major preferredMajor, String applicationOpeningDate,String applicationClosingDate,String companyName,String department,String companyRep,int noOfSlots, ArrayList<Application> applicationList) {
+    public InternshipOpportunity(String internshipTitle, String description, InternshipLevel internshipLevel, Major preferredMajor, String applicationOpeningDate,String applicationClosingDate,String companyName,String department,String companyRep,int noOfSlots, Status status, boolean visible, ArrayList<Application> applicationList) {
         this.internshipTitle = internshipTitle;
         this.description = description;
         this.internshipLevel = internshipLevel;
@@ -30,27 +31,47 @@ public class InternshipOpportunity{
         this.department = department;
         this.companyRepInCharge = companyRep;
         this.noOfSlots = noOfSlots;
-        this.status = Status.PENDING;
+        this.status = status;
+        this.visible = visible;
         this.applicationList = applicationList;
     }
 
     public String getInternshipTitle() {
         return internshipTitle;
     }
+
+    public void setInternshipTitle(String internshipTitle) {
+        this.internshipTitle = internshipTitle;
+    }
     public String getDescription() {
         return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
     }
     public InternshipLevel getInternshipLevel() {
         return internshipLevel;
     }
+    public void setInternshipLevel(InternshipLevel internshipLevel) {
+        this.internshipLevel = internshipLevel;
+    }
     public Major getPreferredMajor() {
         return preferredMajor;
+    }
+    public void setPreferredMajor(Major preferredMajor) {
+        this.preferredMajor = preferredMajor;
     }
     public String getApplicationOpeningDate() {
         return applicationOpeningDate;
     }
+    public void setApplicationOpeningDate(String applicationOpeningDate) {
+        this.applicationOpeningDate = applicationOpeningDate;
+    }
     public String getApplicationClosingDate() {
         return applicationClosingDate;
+    }
+    public void setApplicationClosingDate(String applicationClosingDate) {
+        this.applicationClosingDate = applicationClosingDate;
     }
     public String getCompanyName() {
         return companyName;
@@ -58,14 +79,23 @@ public class InternshipOpportunity{
     public String getDepartment() {
         return department;
     }
+    public void setDepartment(String department) {
+        this.department = department;
+    }
     public String getCompanyRepInCharge() {
         return companyRepInCharge;
     }
     public int getNoOfSlots() {
         return noOfSlots;
     }
+    public void setNoOfSlots(int noOfSlots) {
+        this.noOfSlots = noOfSlots;
+    }
     public Status getStatus() {
         return status;
+    }
+    public Boolean getVisible() {
+        return visible;
     }
     public ArrayList<Application> getApplicationList() {
         return applicationList;
@@ -76,7 +106,14 @@ public class InternshipOpportunity{
     public void setSlots(int noOfSlots){
         this.noOfSlots=noOfSlots;
     }
-    
+    public void toggleVisibility(){
+        if(visible){
+            visible=false;
+        }
+        else{
+            visible = true;
+        }
+    }
     public void addApplication(Application application){
         applicationList.add(application);
     }

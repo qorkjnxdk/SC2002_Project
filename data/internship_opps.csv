@@ -1,3 +1,5 @@
-Title,Description,Level,PreferredMajor,OpeningDate,ClosingDate,CompanyName,Department,CompanyRepInCharge,Slots,Status,ApplicationList
-SWE Intern,Intern things,BASIC,CCDS,2025-10-2,2025-10-25,Acme Robotics Pte Ltd,SWE,grace.tan@acmerobo.com,9,PENDING,U2310001A;appliedDateTime;SUCCESSFUL|U2310002B;appliedDateTime;ACCEPTED|U2310003C;2025-11-11T15:26:20.7994431;PENDING
-SRE Intern,SRE things,INTERMEDIATE,CCDS,2025-10-10,2025-10-10,Acme Robotics Pte Ltd,SRE,grace.tan@acmerobo.com,10,PENDING,U2310004D;appliedDateTime;SUCCESSFUL|U2310001A;appliedDateTime;PENDING
+Title,Description,Level,PreferredMajor,OpeningDate,ClosingDate,CompanyName,Department,CompanyRepInCharge,Slots,Status,Visible,ApplicationList
+SWE Intern,Intern things,BASIC,CCDS,2025-11-20,2025-11-25,Acme Robotics Pte Ltd,SWE,grace.tan@acmerobo.com,9,APPROVED,true,U2310003C;2025-11-11T15:26:20.7994431;PENDING|U2310001A;2025-11-15T01:48:33.9281906;WITHDRAWN|U2310006D;2025-11-15;PENDING
+SRE Intern,SRE things,INTERMEDIATE,CCDS,2025-11-03,2025-11-14,Acme Robotics Pte Ltd,SRE,grace.tan@acmerobo.com,10,APPROVED,true,U2310004D;appliedDateTime;SUCCESSFUL|U2310001A;2025-11-15T01:48:37.427495;WITHDRAWN|U2310006D;2025-11-15;PENDING
+UI/UX,design,BASIC,CCDS,2025-11-03,2025-11-20,Acme Robotics Pte Ltd,design,grace.tan@acmerobo.com,9,APPROVED,true,U2310001A;2025-11-15T01:41:35.5887996;ACCEPTED|U2310006D;2025-11-15;SUCCESSFUL
+Two Man,one guy,INTERMEDIATE,DSAI,2024-10-20,2026-10-22,Acme Robotics Pte Ltd,dept,grace.tan@acmerobo.com,0,PENDING,true,U2310002B;2025-11-15;ACCEPTED

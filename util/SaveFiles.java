@@ -20,11 +20,29 @@ public class SaveFiles {
             pw.println("StudentID,Name,Major,Year,Email,Password");
             for (Student s : studentList) {
                 String major = s.getMajor() == null ? "" : s.getMajor().name();
-                pw.printf("%s,%s,%s,%d,%s%n",
+                pw.printf("%s,%s,%s,%d,%s,%s%n",
                 s.getUserId(),
                 s.getName(),
                 major,
                 s.getYearOfStudy(),
+                s.getEmail(),
+                s.getPassword());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void saveStaffCSV(UserRepository userRepository){
+        ArrayList<CareerStaff> staffList = userRepository.getCareerStaffList();
+        String path = "data/staff_list.csv";
+        Path filePath = Paths.get(path);
+        try (PrintWriter pw = new PrintWriter(Files.newBufferedWriter(filePath, StandardCharsets.UTF_8))) {
+            pw.println("StaffID,Name,Department,Email,Password");
+            for (CareerStaff s : staffList) {
+                pw.printf("%s,%s,%s,%s,%s%n",
+                s.getUserId(),
+                s.getName(),
+                s.getStaffDepartment(),
                 s.getEmail(),
                 s.getPassword());
             }
@@ -91,13 +109,13 @@ public class SaveFiles {
         String path = "data/internship_opps.csv";
         Path filePath = Paths.get(path);
         try (PrintWriter pw = new PrintWriter(Files.newBufferedWriter(filePath, StandardCharsets.UTF_8))) {
-            pw.println("Title,Description,Level,PreferredMajor,OpeningDate,ClosingDate,CompanyName,Department,CompanyRepInCharge,Slots,Status,ApplicationList");
+            pw.println("Title,Description,Level,PreferredMajor,OpeningDate,ClosingDate,CompanyName,Department,CompanyRepInCharge,Slots,Status,Visible,ApplicationList");
             for (InternshipOpportunity s : opportunityList) {
                 String applicationList = serializeApplications(s.getApplicationList());
                 String level = s.getInternshipLevel() == null ? "" : s.getInternshipLevel().name();
                 String preferredMajors = s.getPreferredMajor() == null ? "" : s.getPreferredMajor().name();
                 String status = s.getStatus() == null ? "" : s.getStatus().name();
-                pw.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%d,%s,%s%n",
+                pw.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%d,%s,%b,%s%n",
                     s.getInternshipTitle(),
                     s.getDescription(),
                     level,
@@ -109,6 +127,7 @@ public class SaveFiles {
                     s.getCompanyRepInCharge(),
                     s.getNoOfSlots(),
                     status,
+                    s.getVisible(),
                     applicationList);
             }
         } catch (IOException e) {

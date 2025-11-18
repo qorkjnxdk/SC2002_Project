@@ -1,9 +1,11 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import entities.CompanyRep;
 import entities.CompanyRepCreationReq;
+import entities.Filter;
 import entities.InternshipWithdrawalReq;
 import entities.InternshipOpportunity;
 import entities.Application;
@@ -14,6 +16,8 @@ import repositories.UserRepository;
 import util.SaveFiles;
 import util.UserFactory;
 import entities.User;
+import entities.Application.ApplicationStatus;
+import entities.InternshipOpportunity.Status;
 
 public class CareerStaffController {
     private UserRepository users;
@@ -30,6 +34,12 @@ public class CareerStaffController {
     public ArrayList<InternshipWithdrawalReq> getInternshipWithdrawalReqs(){
         return requests.getInternshipWithdrawalReqList();
     }
+    public ArrayList<InternshipOpportunity> getPendingInternshipOpportunities(){
+        return opportunities.getPendingInternshipOpportunities();
+    }
+    public ArrayList<InternshipOpportunity> getInternshipOpportunityList(){
+        return opportunities.getInternshipOpportunityList();
+    }
     public void addCompanyRepAcct(CompanyRepCreationReq req){
         requests.deleteCompanyReqCreationReq(req);
         UserFactory userFactory = new UserFactory();
@@ -40,21 +50,34 @@ public class CareerStaffController {
     }
     public void approveWithrawReq(InternshipWithdrawalReq req){
         ArrayList<InternshipOpportunity> opps = opportunities.getInternshipOpportunityList();
+        String studentId = req.getUserID();
         for (InternshipOpportunity opp : opps) {
             if (opp.getInternshipTitle().equals(req.getInternshipTitle())
                 && opp.getCompanyName().equals(req.getCompanyName())){
-                //logic for withdrawn
+                Optional<Application> application = opp.getApplicationList().stream()
+                    .filter(app -> app.getStudentID().equals(studentId))
+                    .findFirst();
+                if (application.isPresent()){
+                    Application app = application.get();
+                    app.setApplicationStatus(ApplicationStatus.WITHDRAWN);
+                }
                 break;
             }
         }
-
-        // remove the withdrawal request from repository
         requests.deleteInternshipWithdrawalReq(req);
+    }
+    public void approveInternshipOpportunity(InternshipOpportunity opp){
+        opp.setStatus(Status.APPROVED);
     }
     public void saveFiles(){
         SaveFiles saveFiles = new SaveFiles();
         saveFiles.saveCompanyRepCSV(users);
         saveFiles.saveCompanyRepReqCSV(requests);
+        saveFiles.saveInternshipOpportunityCSV(opportunities);
         saveFiles.saveInternshipWithdrawalRequests(requests);
+        saveFiles.saveStaffCSV(users);
+    }
+    public ArrayList<InternshipOpportunity> filterOpportunities(Filter filter){
+        return opportunities.filterOpportunities(filter);
     }
 }

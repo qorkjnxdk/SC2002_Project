@@ -1,0 +1,16 @@
+1. SWE Intern, Acme Robotics Pte Ltd, SWE
+   BASIC, Intern things
+   Preferred Major: CCDS, Opening: 2025-11-20, Closing: 2025-11-25, Company Rep: grace.tan@acmerobo.com, Slots: 9, Status: APPROVED, Visible: true
+
+2. SRE Intern, Acme Robotics Pte Ltd, SRE
+   INTERMEDIATE, SRE things
+   Preferred Major: CCDS, Opening: 2025-11-03, Closing: 2025-11-14, Company Rep: grace.tan@acmerobo.com, Slots: 10, Status: APPROVED, Visible: true
+
+3. UI/UX, Acme Robotics Pte Ltd, design
+   BASIC, design
+   Preferred Major: CCDS, Opening: 2025-11-03, Closing: 2025-11-20, Company Rep: grace.tan@acmerobo.com, Slots: 9, Status: APPROVED, Visible: true
+
+4. Two Man, Acme Robotics Pte Ltd, dept
+   INTERMEDIATE, one guy
+   Preferred Major: DSAI, Opening: 2024-10-20, Closing: 2026-10-22, Company Rep: grace.tan@acmerobo.com, Slots: 0, Status: PENDING, Visible: true
+
