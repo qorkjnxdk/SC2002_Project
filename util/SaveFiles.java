@@ -11,7 +11,32 @@ import repositories.OpportunityRepository;
 import repositories.RequestRepository;
 import java.util.ArrayList;
 
+/**
+ * Utility class responsible for saving all in-memory repository data
+ * back into their corresponding CSV files.
+ *
+ * <p>This class acts as the counterpart to {@link LoadFiles}, ensuring that
+ * all user accounts, internship opportunities, and request records are
+ * persisted to disk whenever updates occur.</p>
+ *
+ * <p>The following CSV files are written:</p>
+ * <ul>
+ *     <li>{@code student_list.csv}</li>
+ *     <li>{@code staff_list.csv}</li>
+ *     <li>{@code company_rep_list.csv}</li>
+ *     <li>{@code company_rep_req_list.csv}</li>
+ *     <li>{@code withdrawal_req_list.csv}</li>
+ *     <li>{@code internship_opps.csv}</li>
+ * </ul>
+ *
+ * <p>All files are saved using UTF-8 encoding.</p>
+ */
 public class SaveFiles {
+     /**
+     * Saves all registered students to {@code data/student_list.csv}.
+     *
+     * @param userRepository the repository containing the student list
+     */
     public void saveStudentCSV(UserRepository userRepository){
         ArrayList<Student> studentList = userRepository.getStudentList();
         String path = "data/student_list.csv";
@@ -32,6 +57,12 @@ public class SaveFiles {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Saves all career staff users to {@code data/staff_list.csv}.
+     *
+     * @param userRepository the repository containing the staff list
+     */
     public void saveStaffCSV(UserRepository userRepository){
         ArrayList<CareerStaff> staffList = userRepository.getCareerStaffList();
         String path = "data/staff_list.csv";
@@ -50,6 +81,12 @@ public class SaveFiles {
             e.printStackTrace();
         }
     }
+    
+     /**
+     * Saves all career staff users to {@code data/staff_list.csv}.
+     *
+     * @param userRepository the repository containing the staff list
+     */
     public void saveCompanyRepCSV(UserRepository userRepository){
         ArrayList<CompanyRep> companyRepList = userRepository.getCompanyRepList();
         String path = "data/company_rep_list.csv";
@@ -69,6 +106,12 @@ public class SaveFiles {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Saves all company representatives to {@code data/company_rep_list.csv}.
+     *
+     * @param userRepository the repository containing the company rep list
+     */
     public void saveCompanyRepReqCSV(RequestRepository requestRepository){
         ArrayList<CompanyRepCreationReq> companyRepReqList = requestRepository.getAllCompanyRepCreationReq();
         String path = "data/company_rep_req_list.csv";
@@ -87,6 +130,13 @@ public class SaveFiles {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Saves all internship withdrawal requests into
+     * {@code data/withdrawal_req_list.csv}.
+     *
+     * @param requestRepository repository containing withdrawal requests
+     */
     public void saveInternshipWithdrawalRequests(RequestRepository requestRepository){
         ArrayList<InternshipWithdrawalReq> internshipWithdrawalReqs = requestRepository.getInternshipWithdrawalReqList();
         String path = "data/withdrawal_req_list.csv";
@@ -104,6 +154,13 @@ public class SaveFiles {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Saves all internship opportunities to {@code data/internship_opps.csv},
+     * including a serialized representation of their application lists.
+     *
+     * @param opportunities repository containing all internship opportunities
+     */
     public void saveInternshipOpportunityCSV(OpportunityRepository opportunities){
         ArrayList<InternshipOpportunity> opportunityList = opportunities.getInternshipOpportunityList();
         String path = "data/internship_opps.csv";
@@ -134,6 +191,19 @@ public class SaveFiles {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Serializes a list of {@link Application} objects into a single CSV-compatible string.
+     *
+     * <p>The format for each application entry is:</p>
+     * <pre>
+     * studentId;appliedDate;STATUS
+     * </pre>
+     * Entries are separated using {@code |}.
+     *
+     * @param apps the list of applications to serialize
+     * @return a compact string representation of all applications
+     */
     private String serializeApplications(ArrayList<Application> apps) {
         if (apps == null || apps.isEmpty()) return "";
         return apps.stream()

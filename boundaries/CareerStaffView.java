@@ -18,13 +18,46 @@ import entities.InternshipWithdrawalReq;
 import entities.User;
 import entities.Filter;
 import util.AppContext;
+import util.ComplexityChecker;
+import util.ConsoleColors;
 
+
+/**
+ * Boundary class responsible for handling all user interactions for Career Staff.
+ * This class connects user input/output with controller logic in {@link CareerStaffController}.
+ * <p>
+ * This class contains methods:
+ * <ul>
+ *     <li>Viewing and approving company representative account requests</li>
+ *     <li>Viewing and approving internship opportunity creation requests</li>   
+ *     <li>Viewing and approving internship withdrawal requests</li>
+ *     <li>Changing passwords for logged in users</li>
+ *     <li>Generating internship reports and saves it to a txt file</li>
+ *     <li>Filtering and displaying internship opportunities based on selected criteria, selected filter is saved</li> 
+ *     <li>Logging out</li>
+ * </ul>
+ */
 
 public class CareerStaffView {
+     /**
+     * Controller responsible for handling career staff operations.
+     */
     private CareerStaffController careerStaffController;
+     /**
+     * Creates a new CareerStaffView with the given controller.
+     *
+     * @param careerStaffController the controller coordinating business logic for career staff
+     */
     public CareerStaffView(CareerStaffController careerStaffController){
         this.careerStaffController = careerStaffController;
     };
+     /**
+     * Runs the main UI loop for the career staff user.
+     * Displays a menu and handles user selection until logout.
+     *
+     * @param appContext application context containing session data
+     * @param scanner    scanner for reading user input
+     */
     public void run(AppContext Context, Scanner sc){
         while (true) {
             System.out.println("\n===============================");
@@ -49,13 +82,21 @@ public class CareerStaffView {
                 case 7 -> {
                     Context.clearSession();
                     careerStaffController.saveFiles();
-                    System.out.println("You have been logged out.");
+                    System.out.println(ConsoleColors.RED+"You have been logged out."+ConsoleColors.RESET);
                     return;
                 }
-                default -> System.out.println("Invalid choice. Please enter 1-7.");
+                default -> System.out.println(ConsoleColors.RED+"Invalid choice. Please enter 1-7."+ConsoleColors.RESET);
             }
         }
     }
+
+    /**
+     * Displays all pending company representative account creation requests.
+     * Allows the career staff to approve one of the requests.
+     *
+     * @param scanner    user input scanner
+     * @param controller controller handling approval logic
+     */
     public void viewPendingAccountCreationReqs(Scanner sc, CareerStaffController careerStaffController){
         ArrayList<CompanyRepCreationReq> companyRepCreationReqList = careerStaffController.getPendingAccountCreationReqs();
         if(companyRepCreationReqList.size()==0){
@@ -70,7 +111,7 @@ public class CareerStaffView {
                 + req.getDepartment() + ", "
                 + req.getUserID());
         }
-        System.out.println("\nWould you like to make a new withdrawal request? (Y/N)");
+        System.out.println("\nWould you like to approve any account creation request? (Y/N)");
         String choice2 = sc.next();
         if (choice2.equalsIgnoreCase("Y")){
             while (true) {
@@ -80,16 +121,24 @@ public class CareerStaffView {
                     return;
                 }
                 if (choice3 < 1 || choice3 > companyRepCreationReqList.size()){
-                    System.out.println("Invalid selection. Please enter a valid index or -1 to return.");
+                    System.out.println(ConsoleColors.RED+"Invalid selection. Please enter a valid index or -1 to return."+ConsoleColors.RESET);
                     continue; 
                 }
                 CompanyRepCreationReq selected = companyRepCreationReqList.get(choice3 - 1);
                 careerStaffController.addCompanyRepAcct(selected);
-                System.out.println("Approved account for: " + selected.getName() + " (" + selected.getUserID() + ")");
+                System.out.println(ConsoleColors.GREEN+ "Approved account for: " + selected.getName() + " (" + selected.getUserID() + ")"+ ConsoleColors.RESET);
                 break;
             }
         }
     }
+
+    /**
+     * Displays all pending internship opportunity creation requests.
+     * Allows the career staff to approve one of them.
+     *
+     * @param scanner    scanner for user input
+     * @param controller controller responsible for approving opportunities
+     */
     public void viewPendingOpportunities(Scanner sc, CareerStaffController careerStaffController){
         ArrayList<InternshipOpportunity> opps = careerStaffController.getPendingInternshipOpportunities();
         if(opps.size()==0){
@@ -107,22 +156,30 @@ public class CareerStaffView {
         String choice2 = sc.next();
         if (choice2.equalsIgnoreCase("Y")){
             while (true) {
-                System.out.println("\nWhich account do you want to approve? (enter the index number, or -1 to return)");
+                System.out.println("\nWhich internship opportunity do you want to approve? (enter the index number, or -1 to return)");
                 int choice3 = sc.nextInt();
                 if (choice3 == -1) {
                     return;
                 }
                 if (choice3 < 1 || choice3 > opps.size()){
-                    System.out.println("Invalid selection. Please enter a valid index or -1 to return.");
+                    System.out.println(ConsoleColors.RED+"Invalid selection. Please enter a valid index or -1 to return."+ConsoleColors.RESET);
                     continue; 
                 }
                 InternshipOpportunity selected = opps.get(choice3 - 1);
                 careerStaffController.approveInternshipOpportunity(selected);
-                System.out.println("Approved creation of opportunity - " + selected.getInternshipTitle() + " ("+ selected.getCompanyName()+")");
+                System.out.println(ConsoleColors.GREEN+ "Approved creation of opportunity - " + selected.getInternshipTitle() + " ("+ selected.getCompanyName()+")"+ ConsoleColors.RESET);
                 break;
             }
         }
     }
+
+    /**
+     * Displays all pending internship withdrawal requests.
+     * Allows the career staff to approve accordingly.
+     *
+     * @param scanner    scanner for user input
+     * @param controller controller that processes withdrawal approvals
+     */
     public void viewWithdrawalReqs(Scanner sc, CareerStaffController careerStaffController){
         ArrayList<InternshipWithdrawalReq> reqs = careerStaffController.getInternshipWithdrawalReqs();
         if(reqs.size()==0){
@@ -147,31 +204,51 @@ public class CareerStaffView {
                     return;
                 }
                 if (choice3 < 1 || choice3 > reqs.size()){
-                    System.out.println("Invalid selection. Please enter a valid index or -1 to return.");
+                    System.out.println(ConsoleColors.RED+ "Invalid selection. Please enter a valid index or -1 to return."+ConsoleColors.RESET);
                     continue; 
                 }
                 InternshipWithdrawalReq selected = reqs.get(choice3 - 1);
                 careerStaffController.approveWithrawReq(selected);
-                System.out.println("Approved withdrawal request for: " + selected.getInternshipTitle() + " (" + selected.getUserID() + ")");
+                System.out.println(ConsoleColors.GREEN+ "Approved withdrawal request for: " + selected.getInternshipTitle() + " (" + selected.getUserID() + ")"+ConsoleColors.RESET);
                 break;
             }
         }
     }
+
+     /**
+     * Allows the currently logged-in user to change their password.
+     *
+     * @param appContext application context containing the active session
+     * @param scanner    scanner for user input
+     * @param controller controller responsible for saving updated user data
+     */
     public void changePassword(AppContext context, Scanner sc, CareerStaffController controller){
         System.out.println("\nPlease re-enter your password");
         sc.nextLine();
         String password = sc.nextLine();
         User user = context.getSession().getUser();
         while (!(password.equals(user.getPassword()))){
-            System.out.println("\nThat is not your password, try again!");
+            System.out.println(ConsoleColors.RED+"\nThat is not your password, try again!"+ConsoleColors.RESET);
             password = sc.next();
         }
-        System.out.println("Enter your new password:");
+        System.out.println(ConsoleColors.ITALICS+"\nTake note that the password needs to be at least 5 letters, with 1 Uppercase & 1 Lowercase Letter, as well as 1 number."+ConsoleColors.RESET);
+        System.out.println("\nEnter your new password:");
         String newPassword = sc.nextLine();
+        ComplexityChecker checker = new ComplexityChecker();
+        while (!(checker.checkComplexity(newPassword).equals("Accepted"))){
+            System.out.println(ConsoleColors.RED+checker.checkComplexity(newPassword)+ConsoleColors.RESET);
+            newPassword = sc.nextLine();
+        }
         user.changePassword(newPassword);
         controller.saveFiles();
-        System.out.println("Password successfully changed!");
+        System.out.println(ConsoleColors.GREEN+"Password successfully changed!"+ConsoleColors.RESET);
     }
+
+     /**
+     * Generates a formatted internship opportunities report and saves it to a text file.
+     *
+     * @param controller controller that provides the list of opportunities
+     */
     public void generateReport(CareerStaffController careerStaffController){
         ArrayList<InternshipOpportunity> list = careerStaffController.getInternshipOpportunityList();
         if (list.isEmpty()){
@@ -204,11 +281,20 @@ public class CareerStaffView {
         try {
             Files.writeString(reportPath, report.toString(), StandardCharsets.UTF_8,
                 StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-            System.out.println("\nReport saved to " + reportPath.toAbsolutePath());
+            System.out.println(ConsoleColors.GREEN+"\nReport saved to " + reportPath.toAbsolutePath()+ConsoleColors.RESET);
         } catch (IOException e) {
-            System.out.println("Failed to save report: " + e.getMessage());
+            System.out.println(ConsoleColors.RED+"Failed to save report: " + e.getMessage()+ConsoleColors.RESET);
         }
     }
+
+     /**
+     * Allows the user to set custom filters for viewing internship opportunities.
+     * Saves the chosen filter to session and displays the filtered results.
+     *
+     * @param scanner    scanner used for user input
+     * @param controller controller that performs filtering logic
+     * @param appContext application context containing session data
+     */
     public void filterOpportunities(Scanner sc, CareerStaffController careerStaffController, AppContext context){
         Filter filter = context.getSession().getFilter();
         if(filter==null){
@@ -228,7 +314,7 @@ public class CareerStaffView {
                     case 1 -> { internshipLevel = InternshipLevel.BASIC; internshipLevelSet = true; }
                     case 2 -> { internshipLevel = InternshipLevel.INTERMEDIATE; internshipLevelSet = true; }
                     case 3 -> { internshipLevel = InternshipLevel.ADVANCED; internshipLevelSet = true; }
-                    default -> System.out.println("Invalid choice. Please try again.\n");
+                    default -> System.out.println(ConsoleColors.RED+"Invalid choice. Please try again.\n"+ConsoleColors.RESET);
                 }
             }
             Major preferredMajor = null;
@@ -246,7 +332,7 @@ public class CareerStaffView {
                     case 1 -> { preferredMajor = Major.CCDS; preferredMajorSet = true; }
                     case 2 -> { preferredMajor = Major.IEEE; preferredMajorSet = true; }
                     case 3 -> { preferredMajor = Major.DSAI; preferredMajorSet = true; }
-                    default -> System.out.println("Invalid choice. Please try again.\n");
+                    default -> System.out.println(ConsoleColors.RED+"Invalid choice. Please try again.\n"+ConsoleColors.RESET);
                 }
             }
             Status status = null;
@@ -264,7 +350,7 @@ public class CareerStaffView {
                     case 1 -> { status = Status.PENDING; statusSet = true; }
                     case 2 -> { status = Status.APPROVED; statusSet = true; }
                     case 3 -> { status = Status.REJECTED; statusSet = true; }
-                    default -> System.out.println("Invalid choice. Please try again.\n");
+                    default -> System.out.println(ConsoleColors.RED+"Invalid choice. Please try again.\n"+ConsoleColors.RESET);
                 }
             }
             String applicationOpeningDate = null;
@@ -276,7 +362,7 @@ public class CareerStaffView {
                     break;
                 }
                 if (!input.matches("\\d{4}-\\d{2}-\\d{2}")) {
-                    System.out.println("Invalid format. Please use YYYY-MM-DD.\n");
+                    System.out.println(ConsoleColors.RED+"Invalid format. Please use YYYY-MM-DD.\n"+ConsoleColors.RESET);
                     continue;
                 }
 
@@ -284,7 +370,7 @@ public class CareerStaffView {
                 int month = Integer.parseInt(parts[1]);
                 int day   = Integer.parseInt(parts[2]);
                 if (month < 1 || month > 12) {
-                    System.out.println("Invalid month. Must be between 01 and 12.\n");
+                    System.out.println(ConsoleColors.RED+"Invalid month. Must be between 01 and 12.\n"+ConsoleColors.RESET);
                     continue;
                 }
                 int[] daysInMonth = {
@@ -294,7 +380,7 @@ public class CareerStaffView {
                 };
                 int maxDay = daysInMonth[month - 1];
                 if (day < 1 || day > maxDay) {
-                    System.out.println("Invalid day for that month. Max is " + maxDay + ".\n");
+                    System.out.println(ConsoleColors.RED+"Invalid day for that month. Max is " + maxDay + ".\n"+ConsoleColors.RESET);
                     continue;
                 }
                 applicationOpeningDate = input;
@@ -307,7 +393,7 @@ public class CareerStaffView {
                     break;
                 }
                 if (!input.matches("\\d{4}-\\d{2}-\\d{2}")) {
-                    System.out.println("Invalid format. Please use YYYY-MM-DD.\n");
+                    System.out.println(ConsoleColors.RED+"Invalid format. Please use YYYY-MM-DD.\n"+ConsoleColors.RESET);
                     continue;
                 }
 
@@ -315,7 +401,7 @@ public class CareerStaffView {
                 int month = Integer.parseInt(parts[1]);
                 int day   = Integer.parseInt(parts[2]);
                 if (month < 1 || month > 12) {
-                    System.out.println("Invalid month. Must be between 01 and 12.\n");
+                    System.out.println(ConsoleColors.RED+"Invalid month. Must be between 01 and 12.\n"+ConsoleColors.RESET);
                     continue;
                 }
                 int[] daysInMonth = {
@@ -325,11 +411,11 @@ public class CareerStaffView {
                 };
                 int maxDay = daysInMonth[month - 1];
                 if (day < 1 || day > maxDay) {
-                    System.out.println("Invalid day for that month. Max is " + maxDay + ".\n");
+                    System.out.println(ConsoleColors.RED+"Invalid day for that month. Max is " + maxDay + ".\n"+ConsoleColors.RESET);
                     continue;
                 }
                 if (applicationOpeningDate != null && input.compareTo(applicationOpeningDate) <= 0) {
-                    System.out.println("Closing date must be after opening date.\n");
+                    System.out.println(ConsoleColors.RED+"Closing date must be after opening date.\n"+ConsoleColors.RESET);
                     continue;
                 }
                 applicationClosingDate = input;

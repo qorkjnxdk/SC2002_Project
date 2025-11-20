@@ -5,7 +5,35 @@ import entities.Student;
 import entities.User.Role;
 import entities.User;
 
+/**
+ * A factory class responsible for constructing {@link User} objects
+ * based on CSV line input and a specified user role.
+ *
+ * <p>This class centralizes the creation logic for all user types
+ * in the system, ensuring consistent parsing and object instantiation
+ * across Student, CareerStaff, and CompanyRep records.</p>
+ *
+ * <p>CSV Format Requirements:</p>
+ * <ul>
+ *     <li><b>STUDENT</b>: {@code userId, name, major, year, email, password}</li>
+ *     <li><b>CAREER_STAFF</b>: {@code userId, name, department, email, password}</li>
+ *     <li><b>COMPANY_REP</b>: {@code userId, name, companyName, department, position, password}</li>
+ * </ul>
+ *
+ * <p>If an unsupported role is provided, an {@link IllegalArgumentException} is thrown.</p>
+ */
 public class UserFactory {
+    /**
+     * Parses a CSV line and creates the appropriate {@link User} subclass instance
+     * based on the given {@link Role}.
+     *
+     * @param line the CSV record containing all required user fields
+     * @param role the type of user to construct (Student, CareerStaff, or CompanyRep)
+     * @return a fully constructed {@link User} instance
+     *
+     * @throws IllegalArgumentException if the role is unknown
+     * @throws ArrayIndexOutOfBoundsException if the CSV line does not contain enough fields
+     */
     public User addUser(String line, Role role){
         switch (role) {
             case STUDENT:

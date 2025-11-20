@@ -1,6 +1,7 @@
 package boundaries;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import controllers.CareerStaffController;
 import controllers.StudentController;
@@ -14,13 +15,51 @@ import entities.InternshipWithdrawalReq;
 import entities.Student;
 import entities.User;
 import util.AppContext;
+import util.ComplexityChecker;
 import util.ConsoleColors;
 
+/**
+ * Boundary/UI class that manages all interactions between the student user
+ * and the application.
+ *
+ * <p>Supports features including:
+ * <ul>
+ *     <li>Applying for internship opportunities</li>
+ *     <li>Viewing applied/withdrawn/accepted opportunities</li>
+ *     <li>Submitting withdrawal requests</li>
+ *     <li>Viewing student profile</li>
+ *     <li>Filtering internship opportunities</li>
+ *     <li>Changing password</li>
+ *     <li>Logging out</li>
+ * </ul>
+ *
+ * This class connects user input to the underlying business logic in
+ * {@link StudentController}.
+ */
+
 public class StudentView{
+     /**
+     * Controller handling business logic for student operations.
+     */
     private StudentController studentController;
+     /**
+     * Constructs a StudentView with the given controller.
+     *
+     * @param studentController the controller handling student operations
+     */
     public StudentView(StudentController studentController){
         this.studentController = studentController;
     };
+
+     /**
+     * Main UI loop for student users.
+     *
+     * <p>Displays a menu and routes input to the appropriate functionality
+     * until the student logs out.
+     *
+     * @param context application context containing the current session
+     * @param sc      scanner for reading user input
+     */
     public void run(AppContext Context, Scanner sc){
         while (true) {
             System.out.println("\n===============================");
@@ -52,6 +91,13 @@ public class StudentView{
             }
         }
     }
+
+    /**
+     * Displays all internship opportunities in the system.
+     *
+     * @param studentController controller providing the list of opportunities
+     * @param sc                scanner for input (unused but included for consistency)
+     */
     public void viewInternshipOpportunities(StudentController studentController, Scanner sc){
         System.out.println("\nAll Internship Opportunities:");
         ArrayList<InternshipOpportunity> opportunityList = studentController.getInternshipOpportunityList();
@@ -62,6 +108,14 @@ public class StudentView{
                 + req.getDepartment());
         }
     }
+
+     /**
+     * Displays the current student's profile information.
+     *
+     * @param studentController controller used for student lookup
+     * @param sc                scanner for user input
+     * @param context           application context containing session data
+     */
     public void viewProfile(StudentController studentController, Scanner sc, AppContext context){
         System.out.println("\nYour Student Profile:");
         String userId = context.getSession().getUserId();
@@ -71,10 +125,28 @@ public class StudentView{
         System.out.println("Major: " + student.getMajor());
         System.out.println("Year Of Study: " + student.getYearOfStudy());
         switch(student.getYearOfStudy()){
-            case 1,2 -> System.out.println("You are eligible for Basic Internships only!");
-            default -> System.out.println("You are eligible for Basic, Intermediate & Advanced Internships!");
+            case 1,2 -> System.out.println(ConsoleColors.RED+"You are eligible for Basic Internships only!"+ConsoleColors.RESET);
+            default -> System.out.println(ConsoleColors.GREEN+"You are eligible for Basic, Intermediate & Advanced Internships!"+ConsoleColors.RESET);
         }
     }
+
+    /**
+     * Displays internship opportunities that match the student's profile and
+     * that they are allowed to apply for.
+     *
+     * <p>This includes:
+     * <ul>
+     *     <li>Filtering out opportunities already applied to</li>
+     *     <li>Checking maximum application limit (3)</li>
+     *     <li>Checking if student already accepted an internship</li>
+     * </ul>
+     *
+     * Also handles user selection and application submission.
+     *
+     * @param studentController controller handling application logic
+     * @param sc               scanner for user input
+     * @param context          application context containing session data
+     */
     public void viewRelevantInternshipOpportunities(StudentController studentController, Scanner sc, AppContext context){
         String userId = context.getSession().getUserId();
         Student student = studentController.findStudentByUserID(userId);
@@ -85,15 +157,15 @@ public class StudentView{
         ArrayList<InternshipOpportunity> acceptedOpps = studentController.getOppByStatus(userId,ApplicationStatus.ACCEPTED);
         if (acceptedOpps.size()>0){
             InternshipOpportunity opp = acceptedOpps.get(0);
-            System.out.println("\nYou have already accepted "+opp.getInternshipTitle() + " from "+opp.getCompanyName());
+            System.out.println(ConsoleColors.RED+"\nYou have already accepted "+opp.getInternshipTitle() + " from "+opp.getCompanyName()+ConsoleColors.RESET);
             return;
         }
         if (appliedList.size()-withdrawnOpps.size()-rejectedOpps.size()>=3){
-            System.out.println("\nYou already have 3 internship applications. You can't apply for anymore!");
+            System.out.println(ConsoleColors.RED+"\nYou already have 3 internship applications. You can't apply for anymore!"+ConsoleColors.RESET);
             return;
         }
         if (availableList.isEmpty()){
-            System.out.println("\nYou have no new relevant internship opportunities you can apply for (all have been applied to or none match your profile).");
+            System.out.println(ConsoleColors.RESET+"\nYou have no new relevant internship opportunities you can apply for (all have been applied to or none match your profile)."+ConsoleColors.RESET);
             return;
         }
         System.out.println("\nInternship Opportunities You Can Apply For:");
@@ -113,23 +185,38 @@ public class StudentView{
                     return;
                 }
                 if (choice4 < 1 || choice4 > availableList.size()){
-                    System.out.println("Invalid selection. Please enter a valid index or -1 to return.");
+                    System.out.println(ConsoleColors.RED+"Invalid selection. Please enter a valid index or -1 to return."+ConsoleColors.RESET);
                     continue; 
                 }
                 InternshipOpportunity selected = availableList.get(choice4 - 1);
                 studentController.applyInternship(student,selected);
-                System.out.println("Applied to: " + selected.getInternshipTitle() + " (" + selected.getCompanyName() + ")");
+                System.out.println(ConsoleColors.GREEN+"Applied to: " + selected.getInternshipTitle() + " (" + selected.getCompanyName() + ")"+ConsoleColors.RESET);
                 break;
             }
         }
     }
+
+     /**
+     * Displays all internships the student has applied for, grouped by:
+     * <ul>
+     *     <li>Withdrawn applications</li>
+     *     <li>Pending applications</li>
+     *     <li>Successful applications</li>
+     * </ul>
+     *
+     * Also allows the student to accept successful applications.
+     *
+     * @param studentController controller retrieving application status data
+     * @param sc               scanner for user input
+     * @param context          application context
+     */
     public void viewAppliedInternshipOpportunities(StudentController studentController, Scanner sc, AppContext context){
         String UserID = context.getSession().getUserId();
         ArrayList<InternshipOpportunity> opportunityList = studentController.getAppliedInternshipOpportunityList(UserID);
         ArrayList<InternshipOpportunity> acceptedOpps = studentController.getOppByStatus(UserID,ApplicationStatus.ACCEPTED);
         if (acceptedOpps.size()>0){
             InternshipOpportunity opp = acceptedOpps.get(0);
-            System.out.println("You have already accepted "+opp.getInternshipTitle() + " from "+opp.getCompanyName());
+            System.out.println(ConsoleColors.RED+"You have already accepted "+opp.getInternshipTitle() + " from "+opp.getCompanyName()+ConsoleColors.RESET);
             return;
         }
         ArrayList<InternshipOpportunity> withdrawnOpps = studentController.getOppByStatus(UserID,ApplicationStatus.WITHDRAWN);
@@ -181,21 +268,32 @@ public class StudentView{
                         return;
                     }
                     if (choice3 < 1 || choice3 > successfulOpps.size()){
-                        System.out.println("Invalid selection. Please enter a valid index or -1 to return.");
+                        System.out.println(ConsoleColors.RED+"Invalid selection. Please enter a valid index or -1 to return."+ConsoleColors.RESET);
                         continue; 
                     }
                     InternshipOpportunity selected = successfulOpps.get(choice3 - 1);
                     studentController.acceptOpportunity(selected, UserID);
-                    System.out.println("Accepted Internship Opportunity : " + selected.getInternshipTitle() + " (" + selected.getCompanyName() + ")");
+                    System.out.println(ConsoleColors.GREEN+"Accepted Internship Opportunity : " + selected.getInternshipTitle() + " (" + selected.getCompanyName() + ")"+ConsoleColors.RESET);
                     break;
                 }
             }
         } else {
-            System.out.println("\nYou have no successful offers at the moment.");
+            System.out.println(ConsoleColors.RED+"\nYou have no successful offers at the moment."+ConsoleColors.RESET);
         }
     }
+
+    /**
+     * Displays pending withdrawal requests and allows the student to submit
+     * a new withdrawal request for one of their applied internships.
+     *
+     * <p>Ensures valid selection and non-empty withdrawal reason.
+     *
+     * @param studentController controller handling withdrawal requests
+     * @param sc               scanner for user input
+     * @param context          application context containing student session
+     */
     public void viewWithdrawnReqs(StudentController studentController, Scanner sc, AppContext context){
-        String UserID = context.getSession().getUserId();
+         String UserID = context.getSession().getUserId();
         System.out.println("\nYour Pending Withdrawal Requests:");
         ArrayList<InternshipWithdrawalReq> reqs = studentController.getInternshipWithdrawalReqList(UserID);
         for (int i = 0; i < reqs.size(); i++) {
@@ -204,13 +302,23 @@ public class StudentView{
                 + req.getCompanyName() + ", "
                 + req.getWithdrawalReason());
         }
-
+        if (reqs.size() >= 3){
+            System.out.println(ConsoleColors.RED+"\nYou have made 3 withdrawals requests, your account has been banned from making any further requests.");
+            System.out.println("\nPlease contact your school administrator."+ConsoleColors.RESET);
+            return;
+        }
         System.out.println("\nWould you like to make a new withdrawal request? (Y/N)");
         String choice3 = sc.next();
         if (choice3.equalsIgnoreCase("Y")){
             ArrayList<InternshipOpportunity> opportunityList = studentController.getAppliedInternshipOpportunityList(UserID);
-            for (int i = 0; i < opportunityList.size(); i++) {
-                InternshipOpportunity req = opportunityList.get(i);
+            ArrayList<InternshipOpportunity> filtered_opps = opportunityList.stream()
+                .filter(opp -> reqs.stream().noneMatch(req -> 
+                    req.getInternshipTitle().equals(opp.getInternshipTitle()) && 
+                    req.getCompanyName().equals(opp.getCompanyName())
+                ))
+                .collect(Collectors.toCollection(ArrayList::new));
+            for (int i = 0; i < filtered_opps.size(); i++) {
+                InternshipOpportunity req = filtered_opps.get(i);
                 System.out.println((i + 1) + ". " + req.getInternshipTitle() + ", "
                     + req.getCompanyName() + ", "
                     + req.getDepartment());
@@ -218,37 +326,83 @@ public class StudentView{
             while (true) {
                 System.out.println("\nWhich internship do you want to withdraw? (enter the index number, or -1 to return)");
                 int choice4 = sc.nextInt();
+                sc.nextLine();
                 if (choice4 == -1) {
                     return;
                 }
-                if (choice4 < 1 || choice4 > opportunityList.size()){
-                    System.out.println("Invalid selection. Please enter a valid index or -1 to return.");
+                if (choice4 < 1 || choice4 > filtered_opps.size()){
+                    System.out.println(ConsoleColors.RED+"Invalid selection. Please enter a valid index or -1 to return."+ConsoleColors.RESET);
                     continue; 
                 }
-                InternshipOpportunity selected = opportunityList.get(choice4 - 1);
-                System.out.println("\nWhat is your reason for withdrawing");
-                String reason = sc.nextLine();
+                InternshipOpportunity selected = filtered_opps.get(choice4 - 1);
+                //System.out.println("\nWhat is your reason for withdrawing");
+                String reason;
+                while (true) {
+                    System.out.println("\nWhat is your reason for withdrawing");
+                    reason = sc.nextLine().trim();                     
+                    if (reason.isEmpty()) {
+                        System.out.println(ConsoleColors.RED+"A reason for withdrawal is needed."+ConsoleColors.RESET);
+                    } else {
+                        break; // Exit the loop if the reason is not empty
+                    }
+                }
                 studentController.withdrawRequest(UserID,selected, reason);
-                System.out.println("Sent request to withdrawn from: " + selected.getInternshipTitle() + " (" + selected.getCompanyName() + ")");
+                System.out.println(ConsoleColors.GREEN+"Sent request to withdrawn from: " + selected.getInternshipTitle() + " (" + selected.getCompanyName() + ")"+ConsoleColors.RESET);
                 break;
             }
         }
     }
+    
+     /**
+     * Allows a student to change their password.
+     *
+     * <p>Requires reentry of current password before accepting a new one.
+     *
+     * @param context   application context containing logged-in user
+     * @param sc        scanner for reading input
+     * @param controller controller saving the updated file
+     */
     public void changePassword(AppContext context, Scanner sc, StudentController controller){
         System.out.println("\nPlease re-enter your password");
         sc.nextLine();
         String password = sc.nextLine();
         User user = context.getSession().getUser();
         while (!(password.equals(user.getPassword()))){
-            System.out.println("\nThat is not your password, try again!");
+            System.out.println(ConsoleColors.RED+"\nThat is not your password, try again!"+ConsoleColors.RESET);
             password = sc.next();
         }
-        System.out.println("Enter your new password:");
+        System.out.println(ConsoleColors.ITALICS+"\nTake note that the password needs to be at least 5 letters, with 1 Uppercase & 1 Lowercase Letter, as well as 1 number."+ConsoleColors.RESET);
+        System.out.println("\nEnter your new password:");
         String newPassword = sc.nextLine();
+        ComplexityChecker checker = new ComplexityChecker();
+        while (!(checker.checkComplexity(newPassword).equals("Accepted"))){
+            System.out.println(ConsoleColors.RED+checker.checkComplexity(newPassword)+ConsoleColors.RESET);
+            newPassword = sc.nextLine();
+        }
         user.changePassword(newPassword);
         controller.saveFiles();
-        System.out.println("Password successfully changed!");
+        System.out.println(ConsoleColors.GREEN+"Password successfully changed!"+ConsoleColors.RESET);
     }
+
+    /**
+     * Filters internship opportunities according to criteria chosen by the student.
+     *
+     * <p>Filter criteria include:
+     * <ul>
+     *     <li>Internship level</li>
+     *     <li>Preferred major</li>
+     *     <li>Status</li>
+     *     <li>Earliest opening date</li>
+     *     <li>Latest closing date</li>
+     * </ul>
+     *
+     * After filtering, displays matching opportunities and allows the student
+     * to revise filters recursively.
+     *
+     * @param sc                scanner for user input
+     * @param studentController controller performing filtering logic
+     * @param context           app context containing session filter data
+     */
     public void filterOpportunities(Scanner sc, StudentController studentController, AppContext context){
         Filter filter = context.getSession().getFilter();
         if(filter==null){
@@ -286,7 +440,7 @@ public class StudentView{
                     case 1 -> { preferredMajor = Major.CCDS; preferredMajorSet = true; }
                     case 2 -> { preferredMajor = Major.IEEE; preferredMajorSet = true; }
                     case 3 -> { preferredMajor = Major.DSAI; preferredMajorSet = true; }
-                    default -> System.out.println("Invalid choice. Please try again.\n");
+                    default -> System.out.println(ConsoleColors.RED+"Invalid choice. Please try again.\n"+ConsoleColors.RESET);
                 }
             }
             Status status = null;
@@ -304,7 +458,7 @@ public class StudentView{
                     case 1 -> { status = Status.PENDING; statusSet = true; }
                     case 2 -> { status = Status.APPROVED; statusSet = true; }
                     case 3 -> { status = Status.REJECTED; statusSet = true; }
-                    default -> System.out.println("Invalid choice. Please try again.\n");
+                    default -> System.out.println(ConsoleColors.RED+"Invalid choice. Please try again.\n"+ConsoleColors.RESET);
                 }
             }
             String applicationOpeningDate = null;
@@ -316,7 +470,7 @@ public class StudentView{
                     break;
                 }
                 if (!input.matches("\\d{4}-\\d{2}-\\d{2}")) {
-                    System.out.println("Invalid format. Please use YYYY-MM-DD.\n");
+                    System.out.println(ConsoleColors.RED+"Invalid format. Please use YYYY-MM-DD.\n"+ConsoleColors.RESET);
                     continue;
                 }
 
@@ -324,7 +478,7 @@ public class StudentView{
                 int month = Integer.parseInt(parts[1]);
                 int day   = Integer.parseInt(parts[2]);
                 if (month < 1 || month > 12) {
-                    System.out.println("Invalid month. Must be between 01 and 12.\n");
+                    System.out.println(ConsoleColors.RED+"Invalid month. Must be between 01 and 12.\n"+ConsoleColors.RESET);
                     continue;
                 }
                 int[] daysInMonth = {
@@ -334,7 +488,7 @@ public class StudentView{
                 };
                 int maxDay = daysInMonth[month - 1];
                 if (day < 1 || day > maxDay) {
-                    System.out.println("Invalid day for that month. Max is " + maxDay + ".\n");
+                    System.out.println(ConsoleColors.RED+"Invalid day for that month. Max is " + maxDay + ".\n"+ConsoleColors.RESET);
                     continue;
                 }
                 applicationOpeningDate = input;
@@ -347,7 +501,7 @@ public class StudentView{
                     break;
                 }
                 if (!input.matches("\\d{4}-\\d{2}-\\d{2}")) {
-                    System.out.println("Invalid format. Please use YYYY-MM-DD.\n");
+                    System.out.println(ConsoleColors.RED+"Invalid format. Please use YYYY-MM-DD.\n"+ConsoleColors.RESET);
                     continue;
                 }
 
@@ -355,7 +509,7 @@ public class StudentView{
                 int month = Integer.parseInt(parts[1]);
                 int day   = Integer.parseInt(parts[2]);
                 if (month < 1 || month > 12) {
-                    System.out.println("Invalid month. Must be between 01 and 12.\n");
+                    System.out.println(ConsoleColors.RED+"Invalid month. Must be between 01 and 12.\n"+ConsoleColors.RESET);
                     continue;
                 }
                 int[] daysInMonth = {
@@ -365,11 +519,11 @@ public class StudentView{
                 };
                 int maxDay = daysInMonth[month - 1];
                 if (day < 1 || day > maxDay) {
-                    System.out.println("Invalid day for that month. Max is " + maxDay + ".\n");
+                    System.out.println(ConsoleColors.RED+"Invalid day for that month. Max is " + maxDay + ".\n"+ConsoleColors.RESET);
                     continue;
                 }
                 if (applicationOpeningDate != null && input.compareTo(applicationOpeningDate) <= 0) {
-                    System.out.println("Closing date must be after opening date.\n");
+                    System.out.println(ConsoleColors.RED+"Closing date must be after opening date.\n"+ConsoleColors.RESET);
                     continue;
                 }
                 applicationClosingDate = input;

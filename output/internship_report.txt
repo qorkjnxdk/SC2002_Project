@@ -8,9 +8,37 @@
 
 3. UI/UX, Acme Robotics Pte Ltd, design
    BASIC, design
-   Preferred Major: CCDS, Opening: 2025-11-03, Closing: 2025-11-20, Company Rep: grace.tan@acmerobo.com, Slots: 9, Status: APPROVED, Visible: true
+   Preferred Major: CCDS, Opening: 2025-11-03, Closing: 2025-11-20, Company Rep: grace.tan@acmerobo.com, Slots: 8, Status: APPROVED, Visible: true
 
 4. Two Man, Acme Robotics Pte Ltd, dept
    INTERMEDIATE, one guy
-   Preferred Major: DSAI, Opening: 2024-10-20, Closing: 2026-10-22, Company Rep: grace.tan@acmerobo.com, Slots: 0, Status: PENDING, Visible: true
+   Preferred Major: DSAI, Opening: 2024-10-20, Closing: 2026-10-22, Company Rep: grace.tan@acmerobo.com, Slots: 0, Status: APPROVED, Visible: true
+
+5. Mascot Cutie, alibaba, cutie
+   BASIC, be a cutie here
+   Preferred Major: CCDS, Opening: 2025-10-01, Closing: 2025-12-30, Company Rep: jackma@alibaba.com, Slots: 1, Status: APPROVED, Visible: false
+
+6. taobao call centre, alibaba, sales
+   BASIC, pick up calls for taobao
+   Preferred Major: CCDS, Opening: 2025-10-11, Closing: 2025-12-30, Company Rep: jackma@alibaba.com, Slots: 1, Status: APPROVED, Visible: true
+
+7. taobao model, alibaba, model
+   BASIC, be a model for our products
+   Preferred Major: CCDS, Opening: 2025-10-11, Closing: 2025-12-21, Company Rep: jackma@alibaba.com, Slots: 5, Status: APPROVED, Visible: true
+
+8. data analyst, alibaba, data science
+   BASIC, analyse sales data
+   Preferred Major: CCDS, Opening: 2025-10-01, Closing: 2025-12-30, Company Rep: jackma@alibaba.com, Slots: 1, Status: APPROVED, Visible: true
+
+9. title, Acme Robotics Pte Ltd, dept
+   BASIC, description
+   Preferred Major: CCDS, Opening: 2024-10-30, Closing: 2026-10-30, Company Rep: grace.tan@acmerobo.com, Slots: 2, Status: APPROVED, Visible: true
+
+10. green intern, Greenscape Urban Tech, green dept
+   BASIC, be green
+   Preferred Major: CCDS, Opening: 2024-10-21, Closing: 2025-12-12, Company Rep: daniel.wong@greenscape.tech, Slots: 9, Status: APPROVED, Visible: true
+
+11. green engineer, Greenscape Urban Tech, engineering
+   BASIC, engineering greens
+   Preferred Major: CCDS, Opening: 2024-10-01, Closing: 2025-12-12, Company Rep: daniel.wong@greenscape.tech, Slots: 11, Status: APPROVED, Visible: true
 

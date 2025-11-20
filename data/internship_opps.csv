@@ -1,5 +1,15 @@
 Title,Description,Level,PreferredMajor,OpeningDate,ClosingDate,CompanyName,Department,CompanyRepInCharge,Slots,Status,Visible,ApplicationList
-SWE Intern,Intern things,BASIC,CCDS,2025-11-20,2025-11-25,Acme Robotics Pte Ltd,SWE,grace.tan@acmerobo.com,9,APPROVED,true,U2310003C;2025-11-11T15:26:20.7994431;PENDING|U2310001A;2025-11-15T01:48:33.9281906;WITHDRAWN|U2310006D;2025-11-15;PENDING
+SWE Intern,Intern things,BASIC,CCDS,2025-11-20,2025-11-25,Acme Robotics Pte Ltd,SWE,grace.tan@acmerobo.com,9,APPROVED,true,U2310003C;2025-11-11T15:26:20.7994431;PENDING|U2310001A;2025-11-15T01:48:33.9281906;WITHDRAWN|U2310006D;2025-11-15;PENDING|U2310008G;2025-11-20;WITHDRAWN
 SRE Intern,SRE things,INTERMEDIATE,CCDS,2025-11-03,2025-11-14,Acme Robotics Pte Ltd,SRE,grace.tan@acmerobo.com,10,APPROVED,true,U2310004D;appliedDateTime;SUCCESSFUL|U2310001A;2025-11-15T01:48:37.427495;WITHDRAWN|U2310006D;2025-11-15;PENDING
-UI/UX,design,BASIC,CCDS,2025-11-03,2025-11-20,Acme Robotics Pte Ltd,design,grace.tan@acmerobo.com,9,APPROVED,true,U2310001A;2025-11-15T01:41:35.5887996;ACCEPTED|U2310006D;2025-11-15;SUCCESSFUL
-Two Man,one guy,INTERMEDIATE,DSAI,2024-10-20,2026-10-22,Acme Robotics Pte Ltd,dept,grace.tan@acmerobo.com,0,PENDING,true,U2310002B;2025-11-15;ACCEPTED
+UI/UX,design,BASIC,CCDS,2025-11-03,2025-11-20,Acme Robotics Pte Ltd,design,grace.tan@acmerobo.com,8,APPROVED,true,U2310001A;2025-11-15T01:41:35.5887996;WITHDRAWN|U2310006D;2025-11-15;SUCCESSFUL|U2310001A;2025-11-19;SUCCESSFUL|U2310008G;2025-11-20;WITHDRAWN
+Two Man,one guy,INTERMEDIATE,DSAI,2024-10-20,2026-10-22,Acme Robotics Pte Ltd,dept,grace.tan@acmerobo.com,0,APPROVED,true,U2310002B;2025-11-15;ACCEPTED
+Mascot Cutie,be a cutie here,BASIC,CCDS,2025-10-01,2025-12-30,alibaba,cutie,jackma@alibaba.com,1,APPROVED,false,
+taobao call centre,pick up calls for taobao,BASIC,CCDS,2025-10-11,2025-12-30,alibaba,sales,jackma@alibaba.com,1,FILLED,false,U2310007F;2025-11-19;ACCEPTED|U2310003C;2025-11-19;PENDING|U2310008G;2025-11-20;ACCEPTED
+taobao model,be a model for our products,BASIC,CCDS,2025-10-11,2025-12-21,alibaba,model,jackma@alibaba.com,5,APPROVED,true,U2310003C;2025-11-19;WITHDRAWN|U2310003C;2025-11-19;SUCCESSFUL
+data analyst,analyse sales data,BASIC,CCDS,2025-10-01,2025-12-30,alibaba,data science,jackma@alibaba.com,1,APPROVED,true,U2310005E;2025-11-19;WITHDRAWN
+title,description,BASIC,CCDS,2024-10-30,2026-10-30,Acme Robotics Pte Ltd,dept,grace.tan@acmerobo.com,2,APPROVED,true,U2310008G;2025-11-19;WITHDRAWN
+green intern,be green,BASIC,CCDS,2024-10-21,2025-12-12,Greenscape Urban Tech,green dept,daniel.wong@greenscape.tech,9,APPROVED,true,U2310009H;2025-11-19;ACCEPTED|U2310010I;2025-11-19;ACCEPTED|U2310011J;2025-11-19;WITHDRAWN
+green engineer,engineering greens,BASIC,CCDS,2024-10-01,2025-12-12,Greenscape Urban Tech,engineering,daniel.wong@greenscape.tech,11,APPROVED,true,U2310011J;2025-11-19;WITHDRAWN
+google asian food chef,cook asian food,BASIC,CCDS,2025-10-01,2026-03-30,google,food and drinks,ryanlim@google.com,3,FILLED,true,U2310011J;2025-11-19;ACCEPTED|U2310012K;2025-11-19;ACCEPTED|U2310013L;2025-11-19;ACCEPTED
+SWE intern,software engineering,BASIC,CCDS,2025-01-01,2026-01-01,google,software,ryanlim@google.com,2,APPROVED,false,
+title,desc,BASIC,CCDS,2025-10-10,2025-12-12,google,des,ryanlim@google.com,4,APPROVED,true,U2310014M;2025-11-20;ACCEPTED

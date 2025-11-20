@@ -22,7 +22,31 @@ import repositories.OpportunityRepository;
 import repositories.RequestRepository;
 import entities.InternshipOpportunity.Status;
 
+/**
+ * Utility class responsible for loading all CSV files into the system's repositories.
+ *
+ * <p>This includes:</p>
+ * <ul>
+ *     <li>Student accounts</li>
+ *     <li>Career staff accounts</li>
+ *     <li>Company representative accounts</li>
+ *     <li>Company representative account creation requests</li>
+ *     <li>Internship opportunities (with deserialized application lists)</li>
+ *     <li>Internship withdrawal requests</li>
+ * </ul>
+ *
+ * <p>All CSV files are expected to follow the formats defined by the project.
+ * This class is typically called at system startup to populate the repositories
+ * before any operations begin.</p>
+ */
 public class LoadFiles {
+    /**
+     * Loads all required CSV files into the corresponding repositories.
+     *
+     * @param users the repository storing user accounts
+     * @param requests the repository storing account creation and withdrawal requests
+     * @param opportunities the repository storing internship opportunities
+     */
     public void loadCSVs(UserRepository users, RequestRepository requests, OpportunityRepository opportunities){
         loadStudentCSV(users);
         loadCareerStaffCSV(users);
@@ -31,6 +55,13 @@ public class LoadFiles {
         loadWithdrawalRequestCSV(requests);
         loadOpportunityCSV(opportunities);
     }
+    /**
+     * Loads student accounts from {@code data/student_list.csv} into the UserRepository.
+     *
+     * <p>Each row is delegated to {@link UserFactory} to parse and construct a Student object.</p>
+     *
+     * @param userRepository the repository where students will be added
+     */
     public void loadStudentCSV(UserRepository userRepository){
         UserFactory userFactory = new UserFactory();
         String pathString = "data/student_list.csv";
@@ -46,6 +77,11 @@ public class LoadFiles {
             e.printStackTrace();
         } 
     }
+    /**
+     * Loads career staff accounts from {@code data/staff_list.csv}.
+     *
+     * @param userRepository the repository where staff accounts will be added
+     */
     public void loadCareerStaffCSV(UserRepository userRepository){
         UserFactory userFactory = new UserFactory();
         String pathString = "data/staff_list.csv";
@@ -61,6 +97,11 @@ public class LoadFiles {
             e.printStackTrace();
         } 
     }
+    /**
+     * Loads company representative accounts from {@code data/company_rep_list.csv}.
+     *
+     * @param userRepository the repository where company reps will be added
+     */
     public void loadCompanyRepCSV(UserRepository userRepository){
         UserFactory userFactory = new UserFactory();
         String pathString = "data/company_rep_list.csv";
@@ -76,6 +117,13 @@ public class LoadFiles {
             e.printStackTrace();
         } 
     }
+    
+    /**
+     * Loads company representative account creation requests
+     * from {@code data/company_rep_req_list.csv}.
+     *
+     * @param requestRepository the repository where the requests will be stored
+     */
     public void loadCompanyRepReqCSV(RequestRepository requestRepository){
         String pathString = "data/company_rep_req_list.csv";
         UserFactory userFactory = new UserFactory();
@@ -91,6 +139,13 @@ public class LoadFiles {
             e.printStackTrace();
         } 
     }
+
+    /**
+     * Loads internship opportunities from {@code data/internship_opps.csv},
+     * including deserialization of any stored application lists.
+     *
+     * @param opportunityRepository the repository where opportunities will be added
+     */
     public void loadOpportunityCSV(OpportunityRepository opportunityRepository){
         String pathString = "data/internship_opps.csv";
         String line;
@@ -112,6 +167,20 @@ public class LoadFiles {
             e.printStackTrace();
         } 
     }
+
+     /**
+     * Converts a serialized application list (stored in CSV as a single field)
+     * back into a list of {@link Application} objects.
+     *
+     * <p>The format for each application entry is:</p>
+     * <pre>
+     * studentId;appliedDate;STATUS
+     * </pre>
+     * Entries are separated by {@code |}.
+     *
+     * @param data the serialized application string
+     * @return a list of Application objects
+     */
     private ArrayList<Application> deserializeApplications(String data) {
         ArrayList<Application> apps = new ArrayList<>();
         if (data == null || data.isEmpty()) return apps;
@@ -128,6 +197,13 @@ public class LoadFiles {
         }
         return apps;
     }
+
+    /**
+     * Loads internship withdrawal requests from
+     * {@code data/withdrawal_req_list.csv}.
+     *
+     * @param requestRepository the repository where withdrawal requests will be stored
+     */
     public void loadWithdrawalRequestCSV(RequestRepository requestRepository){
         String pathString = "data/withdrawal_req_list.csv";
         String line;
