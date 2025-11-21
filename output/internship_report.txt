@@ -20,7 +20,7 @@
 
 6. taobao call centre, alibaba, sales
    BASIC, pick up calls for taobao
-   Preferred Major: CCDS, Opening: 2025-10-11, Closing: 2025-12-30, Company Rep: jackma@alibaba.com, Slots: 1, Status: APPROVED, Visible: true
+   Preferred Major: CCDS, Opening: 2025-10-11, Closing: 2025-12-30, Company Rep: jackma@alibaba.com, Slots: 1, Status: FILLED, Visible: false
 
 7. taobao model, alibaba, model
    BASIC, be a model for our products
@@ -41,4 +41,20 @@
 11. green engineer, Greenscape Urban Tech, engineering
    BASIC, engineering greens
    Preferred Major: CCDS, Opening: 2024-10-01, Closing: 2025-12-12, Company Rep: daniel.wong@greenscape.tech, Slots: 11, Status: APPROVED, Visible: true
+
+12. google asian food chef, google, food and drinks
+   BASIC, cook asian food
+   Preferred Major: CCDS, Opening: 2025-10-01, Closing: 2026-03-30, Company Rep: ryanlim@google.com, Slots: 3, Status: FILLED, Visible: true
+
+13. SWE intern, google, software
+   BASIC, software engineering
+   Preferred Major: CCDS, Opening: 2025-01-01, Closing: 2026-01-01, Company Rep: ryanlim@google.com, Slots: 2, Status: APPROVED, Visible: false
+
+14. title, google, des
+   BASIC, desc
+   Preferred Major: CCDS, Opening: 2025-10-10, Closing: 2025-12-12, Company Rep: ryanlim@google.com, Slots: 4, Status: APPROVED, Visible: true
+
+15. Web Developer, Alo, Website
+   BASIC, Make a beautiful bold & interactive website for Alo
+   Preferred Major: CCDS, Opening: 2025-10-10, Closing: 2026-03-10, Company Rep: apple@alo.com, Slots: 3, Status: APPROVED, Visible: false
 

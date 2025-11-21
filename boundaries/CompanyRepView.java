@@ -76,10 +76,11 @@ public class CompanyRepView {
                 case 4->toggleOpps(companyRepController, Context, sc);
                 case 5->filterOpportunities(sc, companyRepController, Context);
                 case 6->changePassword(Context,sc,companyRepController);
-                case 7->{
+                case 7 -> {
                     Context.clearSession();
                     companyRepController.saveFiles();
-                    System.out.println(ConsoleColors.RED+"You have been logged out."+ConsoleColors.RESET);
+                    System.out.println("You have been logged out.");
+                    return;
                 }
                 default->{System.out.println(ConsoleColors.RED+"Invalid choice. Please enter 1-7."+ConsoleColors.RESET);}
             }
@@ -336,7 +337,7 @@ public class CompanyRepView {
                     System.out.println("4. Closing Date (YYYY-MM-DD): " + opp.getApplicationClosingDate());
                     System.out.println("5. Preferred Major: " + opp.getPreferredMajor().toString());
                     System.out.printf("6. Number of Slots: %d",opp.getNoOfSlots());
-                    System.out.println("7. Department: " + opp.getDepartment());
+                    System.out.println("\n7. Department: " + opp.getDepartment());
                     System.out.println("8. Internship Level: " + opp.getInternshipLevel().toString());
                     System.out.println("9. Finish Editing");
 

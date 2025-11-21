@@ -116,7 +116,7 @@ public class LoginView {
             }
             System.out.println("Enter Your Username");
             String username = sc.next();
-            System.out.println("Enter Your Password");
+            System.out.println("Enter Your Password (Default is password for first-time users)");
             String password = sc.next();
             System.out.println();
             try{

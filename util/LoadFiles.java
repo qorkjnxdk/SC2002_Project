@@ -125,7 +125,6 @@ public class LoadFiles {
      */
     public void loadCompanyRepReqCSV(RequestRepository requestRepository){
         String pathString = "data/company_rep_req_list.csv";
-        UserFactory userFactory = new UserFactory();
         String line;
         try(BufferedReader br = new BufferedReader(new FileReader(pathString))){
             line = br.readLine();
