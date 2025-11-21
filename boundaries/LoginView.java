@@ -108,7 +108,7 @@ public class LoginView {
                 SaveFiles savefiles = new SaveFiles();
                 savefiles.saveCompanyRepReqCSV(requests);
                 System.out.println(ConsoleColors.GREEN+"\nRequest successfully created!"+ConsoleColors.RESET);
-                break;
+                continue;
             }
             if(role<1 || role>4){
                 System.out.println(ConsoleColors.RED+"\nInvalid choice!"+ConsoleColors.RESET);
