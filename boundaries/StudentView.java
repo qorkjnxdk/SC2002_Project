@@ -334,7 +334,6 @@ public class StudentView{
                     continue; 
                 }
                 InternshipOpportunity selected = filtered_opps.get(choice4 - 1);
-                //System.out.println("\nWhat is your reason for withdrawing");
                 String reason;
                 while (true) {
                     System.out.println("\nWhat is your reason for withdrawing");
@@ -342,7 +341,7 @@ public class StudentView{
                     if (reason.isEmpty()) {
                         System.out.println(ConsoleColors.RED+"A reason for withdrawal is needed."+ConsoleColors.RESET);
                     } else {
-                        break; // Exit the loop if the reason is not empty
+                        break; 
                     }
                 }
                 studentController.withdrawRequest(UserID,selected, reason);

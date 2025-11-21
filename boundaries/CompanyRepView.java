@@ -188,7 +188,6 @@ public class CompanyRepView {
             System.out.print("Input Application Closing Date (YYYY-MM-DD): ");
             applicationClosingDate = sc.nextLine().trim();
 
-            // Basic format check
             if (!applicationClosingDate.matches("\\d{4}-\\d{2}-\\d{2}")) {
                 System.out.println(ConsoleColors.RED+"Invalid format. Please use YYYY-MM-DD.\n"+ConsoleColors.RESET);
                 continue;
