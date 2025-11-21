@@ -8,7 +8,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
 import controllers.CareerStaffController;
-import controllers.StudentController;
 import entities.CompanyRepCreationReq;
 import entities.InternshipOpportunity;
 import entities.InternshipOpportunity.InternshipLevel;

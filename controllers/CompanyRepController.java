@@ -3,7 +3,6 @@ import repositories.*;
 import util.SaveFiles;
 
 import java.util.ArrayList;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import entities.Filter;
@@ -27,8 +26,6 @@ import entities.InternshipOpportunity.Status;
  * <p>It serves as the logic layer between the CompanyRepView and the underlying repositories.
  */
 public class CompanyRepController {
-    /** Repository containing pending requests (not heavily used here). */
-    private RequestRepository requests;
     /** Repository storing all user information, including students and company reps. */
     private UserRepository users;
     /** Repository storing all internship opportunities. */
@@ -41,8 +38,7 @@ public class CompanyRepController {
      * @param users         repository containing user information
      * @param opportunities repository containing internship opportunities
      */
-    public CompanyRepController(RequestRepository requests, UserRepository users, OpportunityRepository opportunities){
-        this.requests = requests;
+    public CompanyRepController(UserRepository users, OpportunityRepository opportunities){
         this.users = users;
         this.opportunities = opportunities;
     }

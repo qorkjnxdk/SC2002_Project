@@ -7,7 +7,6 @@ import util.AppContext;
 import util.ComplexityChecker;
 import util.ConsoleColors;
 import controllers.CompanyRepController;
-import controllers.StudentController;
 import entities.*;
 import entities.Application.ApplicationStatus;
 import entities.InternshipOpportunity.InternshipLevel;
@@ -71,32 +70,18 @@ public class CompanyRepView {
             System.out.println("=================================");
             int choice = sc.nextInt();
             switch (choice) {
-                case 1:
-                    createInternshipOpportunity(sc, companyRepController, Context);
-                    break;
-                case 2:
-                    viewRelevantInternshipOpportunities(companyRepController, Context, sc);
-                    break;
-                case 3:
-                    editPendingInternshipOpportunities(companyRepController, Context, sc);
-                    break;
-                case 4:
-                    toggleOpps(companyRepController, Context, sc);
-                    break;
-                case 5:
-                    filterOpportunities(sc, companyRepController, Context);
-                    break;
-                case 6:
-                    changePassword(Context,sc,companyRepController);
-                    break;
-                case 7:
+                case 1->createInternshipOpportunity(sc, companyRepController, Context);
+                case 2->viewRelevantInternshipOpportunities(companyRepController, Context, sc);
+                case 3->editPendingInternshipOpportunities(companyRepController, Context, sc);
+                case 4->toggleOpps(companyRepController, Context, sc);
+                case 5->filterOpportunities(sc, companyRepController, Context);
+                case 6->changePassword(Context,sc,companyRepController);
+                case 7->{
                     Context.clearSession();
                     companyRepController.saveFiles();
                     System.out.println(ConsoleColors.RED+"You have been logged out."+ConsoleColors.RESET);
-                    return;
-                default:
-                    System.out.println(ConsoleColors.RED+"Invalid choice. Please enter 1-7."+ConsoleColors.RESET);
-                    break;
+                }
+                default->{System.out.println(ConsoleColors.RED+"Invalid choice. Please enter 1-7."+ConsoleColors.RESET);}
             }
         }
     }

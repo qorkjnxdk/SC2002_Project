@@ -34,8 +34,6 @@ public class LoginView {
     private StudentView studentView;
     private AuthController authController;
     private RequestRepository requests;
-    private UserRepository users;
-    private OpportunityRepository opportunities;
      /**
      * Constructs a LoginView containing the different user views and request storage.
      *

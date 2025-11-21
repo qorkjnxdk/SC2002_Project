@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import controllers.CareerStaffController;
 import controllers.StudentController;
 import entities.Application.ApplicationStatus;
 import entities.Filter;

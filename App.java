@@ -55,7 +55,7 @@ public class App{
         LoadFiles ld = new LoadFiles();
         ld.loadCSVs(userRepository, requestRepository, opportunityRepository);
 
-        CompanyRepController companyRepController = new CompanyRepController(requestRepository, userRepository, opportunityRepository);
+        CompanyRepController companyRepController = new CompanyRepController(userRepository, opportunityRepository);
         StudentController studentController = new StudentController(requestRepository, userRepository, opportunityRepository);
         CareerStaffController careerStaffController = new CareerStaffController(requestRepository, userRepository, opportunityRepository);
         AuthController authController = new AuthController(userRepository);
