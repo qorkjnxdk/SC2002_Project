@@ -50,11 +50,7 @@
    BASIC, software engineering
    Preferred Major: CCDS, Opening: 2025-01-01, Closing: 2026-01-01, Company Rep: ryanlim@google.com, Slots: 2, Status: APPROVED, Visible: false
 
-14. title, google, des
-   BASIC, desc
-   Preferred Major: CCDS, Opening: 2025-10-10, Closing: 2025-12-12, Company Rep: ryanlim@google.com, Slots: 4, Status: APPROVED, Visible: true
-
-15. Web Developer, Alo, Website
-   BASIC, Make a beautiful bold & interactive website for Alo
-   Preferred Major: CCDS, Opening: 2025-10-10, Closing: 2026-03-10, Company Rep: apple@alo.com, Slots: 3, Status: APPROVED, Visible: false
+14. Fullstack Developer, Alo, Development
+   BASIC, Make a beautiful student website for Alo
+   Preferred Major: CCDS, Opening: 2025-10-10, Closing: 2026-03-10, Company Rep: apple@alo.com, Slots: 3, Status: APPROVED, Visible: true
 
